@@ -1,0 +1,91 @@
+<div class="register-container" >
+    <p-toast position="top-right"></p-toast>
+    
+    <p-card header = "Signup for your iTravel account"
+            [style] ="{width:'600px', 'margin':'120px'}" 
+            styleClass="p-card-shadow"
+            class="p-fluid p-grid p-jc-center">
+        <ng-template pTemplate="header">
+            iTravel
+        </ng-template>
+        <div class="p-col-12" id="form-container">
+            <form class="p-fluid p-grid p-jc-center" 
+                  [formGroup] = "signupForm" 
+                  (ngSubmit) = "registerUser()"> 
+                
+                  <div class="p-col-6" id="firstname-container">
+                      <span class="p-input-icon-right">
+                          <i class="pi pi-user"></i>
+                          <input type="text" 
+                                 id="firstname" 
+                                 pInputText 
+                                 formControlName = "firstname" 
+                                 name="firstname"
+                                 placeholder="Firstname">
+                      </span>
+                  </div>
+
+                  <div class="p-col-6" id="lastname-container">
+                      <span class="p-input-icon-right">
+                          <i class="pi pi-user"></i>
+                          <input type="text" id="lastname" pInputText formControlName = "lastname" placeholder="Lastname" >
+
+                      </span>
+                  </div>
+
+                  <div class="p-col-6 p-offset-1" id="email-container">
+                      <span class="p-input-icon-right">
+                          <i class="pi pi-envelope"></i>
+                          <input type="text" id="email" pInputText formControlName = "email" placeholder="Email">
+                      </span>
+                  </div>
+
+                  <div class="p-col-6" id="password-container">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-key"></i>
+                        <input type="text" id="password" pInputText formControlName = "password" placeholder="Password">
+                    </span>
+                  </div>
+
+                  <div class="p-col-6" id="password1-container">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-key"></i>
+                        <input type="text" id="password1" pInputText formControlName = "password" placeholder="Verify Password" [(ngModel)] = "password" >
+                    </span>
+                  </div>
+                  <div class="p-col-3">
+                       <button pButton pRipple 
+                            type="submit" 
+                            label="SignUp" 
+                            class="p-button-outlined p-button-success" 
+                            icon="pi pi-check" 
+                            iconPos="right" >
+                       </button>
+                  </div>
+                  <div class="p-col-1">
+                      <label class="p-text-italic p-text-center"> OR </label>
+
+                  </div>
+                  <div class="p-col-3">
+                        <button pButton pRipple 
+                            type="button" 
+                            label="Login" 
+                            class="p-button-outlined p-button-success" 
+                            icon="pi pi-sign-in" 
+                            iconPos="right"
+                            (click)="login()" >
+                        </button>
+
+
+                  </div>
+            </form>
+        </div>
+
+        <div *ngIf = "loading">
+            <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+            <p>Creating Account</p>
+        </div>
+    </p-card>
+
+
+</div>

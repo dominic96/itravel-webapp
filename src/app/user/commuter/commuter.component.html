@@ -1,0 +1,149 @@
+<div class="commuter-parent-containter">
+    <p-toast position="top-right"></p-toast>
+    <p-sidebar [(visible)] = "sideMenu" [style]="{width:'15em'}" >
+
+
+        <div class="p-d-flex p-flex-column p-text-capitalize">
+
+            <div class="p-col-12 p-md-4">
+                <div class="card">
+                    <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
+                    <p-footer>
+                        <p>Username</p>
+                    </p-footer>
+                </div>
+            </div>
+
+            <div class="p-col-12" >
+                <button pButton 
+                        type="button" 
+                        label="Logout" 
+                        icon="pi pi-sign-out"
+                        iconPos="left" 
+                        class="p-button-text p-text-left"
+                        (click) = "logout()"
+                        autofocus
+                        style="width:12rem;">
+                </button>
+
+            </div>
+        </div>
+    </p-sidebar>
+
+    <p-dialog header="Purchase Ticket" 
+              [(visible)]="purchaseTicket"
+              [style] = "{width: '50vw'}"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+              position="top"
+              class="p-text-center p-text-capitalize"
+              id="ticket-purchase-dialog">
+            <div>
+                <p>Origin:              {{route.origin}}</p>
+                <p>Destination:         {{route.destination}}</p>
+                <p>Est Departure Time:  {{route.departureTime}}</p>
+                <p>Est Arrival Time:    {{route.arrivalTime}}</p>
+                <p>Price:               ${{route.price}}</p>
+            </div>
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="onConfirmPurchase()" label="Confirm" styleClass="p-button-text"></p-button>
+            </ng-template>
+    </p-dialog>
+
+    <p-dialog header="Boarding Passes" 
+              [(visible)]="boardingPass"
+              [style] = "{width: '50vw'}"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+              position="top"
+              class="p-text-center p-text-capitalize"
+              id="ticket-display-dialog">
+            <div>
+                <app-ticket [tickets] = "tickets" ></app-ticket>
+            </div>
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="closeBoardingPassList()" label="Close" styleClass="p-button-text"></p-button>
+            </ng-template>
+    </p-dialog>
+
+
+    
+
+    <div class="p-grid p-fluid" id="commuter-parent-grid">
+        <div class="p-col-12" id="top-side">
+
+            <div class="p-grid p-fluid p-ai-start vertical-container" id="top-side-grid">
+
+                <div class="p-col" id="sidebar-button">
+                    <p-button type="text" (click) = "sideMenu = true" icon="pi pi-bars" label="Show">
+                    </p-button>
+                </div>
+
+                <div class="p-col" id="middle-menu-item">
+                    <div class="box"></div>
+
+                </div>
+
+                <div class="p-col" id="most-right-menu-item">
+                    <p-button type="text" 
+                              (click) = "showBoardingPass()" 
+                              icon="pi pi-ticket" 
+                              label="View Tickets / Passes"
+                              position= "bottom">
+                    </p-button>
+
+                </div>
+
+            </div>
+        </div>
+
+        
+        <p-card  class="p-col-12" styleClass="p-card-shadow">
+            <p-tabView styleClass="tabview-custom">
+                <p-tabPanel>
+                   <ng-template pTemplate = "header" >
+                        <i class="pi pi-home"></i>
+                        <span style="margin-left: 10px;"> Home</span>
+                   </ng-template>
+                   <p>Home Content / Feed </p>
+                </p-tabPanel>
+
+                <p-tabPanel>
+                    <ng-template pTemplate = "header">
+                        <i class="pi pi-map"></i>
+                        <span style="margin-left: 10px;">Local Routes</span>
+                    </ng-template>
+                    <app-routes [routes] = "localRoutes" [routeType] = "routeType" 
+                                (buyTicket) = "onBuyTicketEvent($event)">
+                    </app-routes>
+                    
+                   
+                </p-tabPanel>
+                <p-tabPanel>
+                    <ng-template pTemplate = "header">
+                        <i class="pi pi-map"></i>
+                        <span style="margin-left: 10px;">  Intercity Routes</span>
+                    </ng-template>
+                    <app-routes [routes] = "intercityRoutes" [routeType] = "routeType"
+                                (buyTicket) = "onBuyTicketEvent($event)">
+
+                    </app-routes>
+                    <div>
+                       
+                    </div>
+                </p-tabPanel>
+
+
+                <p-tabPanel>
+                    <ng-template pTemplate = "header">
+                        <i class="pi pi-map"></i>
+                        <span style="margin-left: 10px;">  InterNational Routes</span>
+                    </ng-template>
+
+                    <app-routes [routes] = "internationalRoutes" [routeType] = "routeType"
+                                (buyTicket) = "onBuyTicketEvent($event)">
+
+                    </app-routes>
+                </p-tabPanel>
+            </p-tabView>
+        </p-card>
+    </div>
+</div>

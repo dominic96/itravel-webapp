@@ -1,0 +1,121 @@
+<div>
+    <p-dataView [value] = "routes">
+        <ng-template pTemplate = "header">
+            <div class="p-d-flex p-jc-between">
+                <div class="p-mr-2">
+                    <input type="seatch" placeholder="Search By Destination" pInputText
+                    [style]= "{'min-width':'10em'}">
+
+                </div>
+
+                <div class="p-mr-2">
+                    <p-dropdown [options]="sortOptions"  placeholder="Sort By"
+                                [style]="{'min-width':'10em'}"></p-dropdown>
+                </div>
+
+                <div>
+                    <p-dataViewLayoutOptions ></p-dataViewLayoutOptions>
+                </div>
+            </div>
+
+        </ng-template>
+ 
+        <ng-template let-route pTemplate="gridItem">
+            
+            <div class="p-col-12 p-md-3">
+                <p-card styleClass="p-card-shadow" [style]= "{width:'280px', 'margin-bottom':'5px'}">
+                    <ng-template pTemplate = "header" [style] ="{'margin':'5px'}">
+                        <div class="p-d-flex p-jc-between" >
+                            <div style="margin: 10px;">
+                                <i class="pi pi-tag"> {{routeType}}</i>
+                            </div>
+                            <div id="operator" style="margin: 10px;">
+                                <label>{{route.operator}}</label>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate = "content">
+                        <div class="p-grid p-jc-center">
+                            <div class="p-col-12 p-text-center p-text-capitalize">
+                                {{route.origin}}
+                            </div>
+                            <div class="p-col-12 p-text-center p-text-light" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                <label >to</label>
+                            </div>
+                            <div>
+                                {{route.destination}}
+                            </div>
+                            <div class="p-col-12 p-text-center" id="time">
+                                <label>{{route.departureTime}}hrs to {{route.arrivalTime}}hrs </label>
+                            </div>    
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate = "footer">
+                        <div class="p-d-flex p-jc-between">
+                            <div>
+                                <i class="pi pi-dollar">{{route.price}}</i>
+                            </div>
+                            <div>
+                               <button pButton type="button" label="Buy Ticket" icon ="pi pi-ticket" class="p-button-outlined" 
+                                       badge ="open" badgeClass = "p-badge-info"  
+                                       (click)= "onBuyTicketEvent($event,route)">
+                                </button>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                    
+                </p-card>
+
+            </div>
+        </ng-template>
+
+        <ng-template let-route pTemplate="listItem">
+            
+            <div class="p-col-12">
+                <p-card styleClass="p-card-shadow">
+                    <ng-template pTemplate = "header">
+                        <div class="p-d-flex p-jc-between p-text-capitalize p-text-center">
+                            <div style="margin: 10px;" class="p-text-capitalize p-text-center">
+                                <i class="pi pi-tag"> Intercity</i>
+                            </div>
+                            <div style="margin: 10px;" class="p-text-capitalize p-text-center">
+                                {{route.operator}}
+                            </div>
+                         </div>
+                    
+                    </ng-template>
+                    <div class="p-d-flex p-jc-between">
+                        <div class="p-text-capitalize p-text-center">
+                            <div>
+                                {{route.origin}} ~~~ {{route.destination}}
+                            </div>
+                            <div>
+                                {{route.departureTime}}hrs ~~~ {{route.arrivalTime}}hrs
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <div class="p-text-capitalize p-text-center">
+                                <i class="pi pi-dollar">{{route.price}}</i>
+                            </div>
+                            <div>
+                               <button pButton type="button" label="Buy Ticket" icon ="pi pi-ticket" 
+                                       class="p-button-outlined" badge ="open" badgeClass = "p-badge-info"
+                                       (click)= "onBuyTicketEvent($event,route)">
+                                </button>
+                            </div>
+                         </div>
+
+                    </div>
+                    {{route.routeId}}
+
+                </p-card>
+
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>

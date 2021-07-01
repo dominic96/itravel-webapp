@@ -1,0 +1,8 @@
+
+div.origin {
+    text-justify: auto;
+    justify-content: center;
+    justify-self: center;
+    justify-items: center;
+    border-top: 1px green;
+}

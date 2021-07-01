@@ -1,0 +1,16 @@
+<p>Adminstrator Account</p>
+<p>Welcome Adminstrator, {{adminstrator.firstname}} {{adminstrator.lastname}}</p>
+<div *ngIf = "currentUsers[0].userId > 0">
+    <h1>Currently Logged in Users</h1>
+    <ul class="current-users">
+        <li *ngFor = "let user of currentUsers">
+            <p>Firstname: {{user.firstname}}</p>
+            <p>lastname : {{user.lastname}}</p>
+            <p></p>
+        </li>
+    </ul>
+</div>
+<div>
+    <button (click) = "getLoggedInUsers()">Get LoggedIn Users</button>
+</div>
+
