@@ -1,0 +1,101 @@
+<div class="stationContainer">
+    <div class="createStation">
+        <p-toast position="top-right"></p-toast>
+        <p-card header = "Enter Station Details"
+                [style] = "{width: '600px'}"
+                styleClass = "p-card-shadow"
+                class="p-grid p-fluid p-jc-center">
+            <ng-template pTemplate = "header" id= "header">
+                <p class="header">Station</p>
+            </ng-template>
+            <div class="p-col-12 p-fluid" id="form-container">
+                <form class="p-grid p-fluid p-jc-center"
+                      [formGroup] = "stationForm"
+                      (ngSubmit) = "onCreateStation()">
+
+        
+                    <div class="p-col-5">
+                        <p-dropdown [options] ="countries" 
+                                    formControlName = "country"
+                                    placeholder = "Select Country"
+                                    optionLabel = "name"
+                                    optionValue = "name"
+                                    [showClear] = "true"
+                                    appendTo = "body"
+                                    (onChange) = "setCities()">
+
+                        </p-dropdown>
+
+                    </div>
+                    <div class="p-col-5">
+                        <p-dropdown [options] ="cities" 
+                                    formControlName = "city" 
+                                    placeholder = "Select City"
+                                    optionLabel = "name"
+                                    optionValue = "name"
+                                    (onChange) = "setAreas()"
+                                    appendTo = "body"
+                                    [showClear] = "true">
+
+                        </p-dropdown>
+                    </div>
+
+                    <div class="p-col-4">
+                        <input type="text" formControlName="name" id="name" pInputText placeholder="Station Name"> 
+
+                    </div>
+
+                    <div class="p-col-4">
+                        <p-dropdown [options] ="areas" 
+                                    formControlName = "area" 
+                                    placeholder = "Select Area"
+                                    appendTo = "body"
+                                    [showClear] = "true">
+
+                        </p-dropdown>
+                    </div>
+
+                    <div class="p-col-4">
+                        <input type="text" formControlName="street" id="street" pInputText placeholder="Street Name"> 
+
+                    </div>
+                    
+                    <div class="p-col-12">
+                        <div class="p-grid p-jc-between">
+                            
+                            <div class="p-col-4">
+                                <button pButton pRipple type="button" 
+                                        label="Cancel" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-times" 
+                                        iconPos="right" 
+                                        (click) = "cancelStation()">
+                                </button>
+
+                            </div>
+
+                            <div class="p-col-4">
+                                <button pButton pRipple type="submit" 
+                                        label="Create " 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-check" 
+                                        iconPos="right" >
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <div *ngIf = "loading">
+                <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}" label = "creating station..."></p-progressBar>
+                <p>creating station...</p>
+            </div>
+        </p-card>
+
+    </div>
+    
+
+</div>
+

@@ -1,0 +1,72 @@
+<div class="createFleetParent">
+    <p-toast position="top-right"></p-toast>
+    <p-card header = "Enter Fleet Details"
+            [style] = "{width: '600px'}"
+            styleClass = "p-card-shadow"
+            class="p-grid p-fluid p-jc-center">
+
+            <ng-template pTemplate = "header" id= "header">
+                <p class="header">Fleet</p>
+            </ng-template>
+            <div class="p-col-12" id="formContainter">
+                <form class="p-grid p-fluid p-jc-center"
+                      [formGroup] = "fleetForm"
+                      (ngSubmit) = "createFleet()">
+
+                    <div class="p-col-6">
+                        <input type="text" formControlName="name" id="name" pInputText placeholder="Fleet Name"> 
+
+                    </div>
+                    <div class="p-col-6">
+                        <p-inputNumber formControlName="size" [min]="1" [max]="20" [showButtons]="true"></p-inputNumber>
+
+                    </div>
+                    <div class="p-col-6">
+                        <p-dropdown [options] ="serviceProviders" 
+                                    formControlName = "serviceProvider" 
+                                    placeholder = "Select Service Provider"
+                                    optionLabel = "name"
+                                    optionValue = "name"
+                                
+                                    [showClear] = "true">
+
+                        </p-dropdown>
+
+
+                    </div>
+                    <div class="p-col-12">
+                        <div class="p-grid p-jc-between">
+                            <div class="p-col-4">
+                                <button pButton pRipple type="button" 
+                                        label="Cancel" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-times" 
+                                        iconPos="right" 
+                                        (click) = "cancelFleet()">
+                                </button>
+
+                            </div>
+
+                            <div class="p-col-4">
+                                <button pButton pRipple type="submit" 
+                                        label="Create" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-check" 
+                                        iconPos="right" >
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+            <div *ngIf = "loading">
+                <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}" label = "creating fleet..."></p-progressBar>
+                <p>creating fleet..</p>
+            </div>
+    </p-card>
+
+</div>

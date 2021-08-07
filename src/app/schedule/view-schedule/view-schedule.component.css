@@ -1,0 +1,77 @@
+#listCard{
+    height: 100px;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: azure;
+
+}
+
+#listIcon{
+    height: 96px;
+    width: 96px;
+}
+
+
+#listInfo{
+    height: 50px;
+}
+
+.listNames{
+    height: 25px;
+    text-align: center;
+    font-weight: bolder;
+}
+.listTime{
+    height: 25px;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#buttons{
+    height: 50px;
+    align-content: center;
+
+}
+
+.price{
+    height: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#gridCard{
+    height: 200px;
+    width: 250px;
+    align-content: center;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: azure;
+}
+
+#gridIcon{
+    height: 150px;
+    width: 150px;
+
+}
+
+#gridInfo{
+    height: 110px;
+    padding: 0px;
+
+}
+
+.gridNames{
+    height: 20px;
+    text-align: center;
+    font-weight: bolder;
+
+}
+
+.gridTime{
+    height: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+

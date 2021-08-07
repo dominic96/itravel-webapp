@@ -23,7 +23,7 @@ export class TicketService {
   public generateTicket(ticket: Ticket, commuterId: number): Observable<Ticket> {
     console.log("Generating ticket");
   
-    const url = `${this.baseUrl}/generate/${commuterId}`;
+    const url = `${this.baseUrl}/purchase/${commuterId}`;
     return this.http.post<Ticket>(url, ticket, this.httpOptions)
                       .pipe(
                         tap( ticket =>`Successfuly created a ticket with Id: ${ticket.ticketId}` ),

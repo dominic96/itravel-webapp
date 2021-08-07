@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
              
               if (this.authenticationService.userValue.type == "commuter") {
                 //navigate to commuter homepage
+                this.user = this.authenticationService.userValue;
                 console.log("Navigating user to their Home according to User Type");
                 this.router.navigate(['/commuter/commuter']);
                 this.showSuccess();

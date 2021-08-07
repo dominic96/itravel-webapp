@@ -1,0 +1,97 @@
+#icon{
+    width: 100px;
+    height: 100px;
+    background-image: url(../../../assets/images/icons8-bus-stop-96.png);
+}
+
+#listCard{
+    box-shadow: rgb(198, 205, 235);
+    padding: 5px;
+    height: 110px;
+    
+}
+
+#infoAndButton{
+    height: 90px;
+    padding: 5px;
+    background-color: rgba(221, 222, 236, 0.541);
+
+}
+
+
+#info{
+    height: 90px;
+    padding-bottom: 5px;
+}
+
+#fleetName{
+    height: 50px;
+}
+
+.fleetName{
+    font-weight: bolder;
+}
+
+.serviceProvider{
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.label{
+    height: 50px;
+
+}
+
+.card{
+    height: 210px;
+    width: 200px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: rgb(230, 230, 247);
+
+
+}
+
+
+
+.imgBox{
+    height: 110px;
+    width: 168px;
+    padding: 0px;
+    background-image: url(../../../assets/images/icons8-bus-stop-97.png);
+}
+
+
+#gbutton{
+    padding: 0em;
+    align-content: center;
+}
+
+#gmore{
+    padding: 0em;
+    align-content: center;
+}
+
+.p-col-12{
+    padding: 0em;
+}
+#gName{
+    padding: 0em;
+}
+
+.pName{
+    height: 35px;
+    margin: 0px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.pMore{
+    height: 25px;
+    margin: 0px;
+}
+
+.pDocks{
+    height: 25px;
+    margin: 0px;
+}

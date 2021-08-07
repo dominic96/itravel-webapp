@@ -1,16 +1,198 @@
-<p>Adminstrator Account</p>
-<p>Welcome Adminstrator, {{adminstrator.firstname}} {{adminstrator.lastname}}</p>
-<div *ngIf = "currentUsers[0].userId > 0">
-    <h1>Currently Logged in Users</h1>
-    <ul class="current-users">
-        <li *ngFor = "let user of currentUsers">
-            <p>Firstname: {{user.firstname}}</p>
-            <p>lastname : {{user.lastname}}</p>
-            <p></p>
-        </li>
-    </ul>
-</div>
-<div>
-    <button (click) = "getLoggedInUsers()">Get LoggedIn Users</button>
-</div>
+<div class="adminContainer">
+    <p-toast position="top-right"></p-toast>
 
+    <p-sidebar [(visible)] = "sideMenu" [style]="{width:'15em'}" class="sideBar">
+        <div class="p-d-flex p-flex-column p-text-capitalize" id="sideBar">
+
+            <div class="p-col-12 p-md-4" id="avatarContainer">
+                <div class="card">
+                   
+                </div>
+                <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
+                {{adminstrator.email}}
+            </div>
+
+            <div class="p-col-12" id="buttonContainer">
+                <button pButton 
+                        type="button" 
+                        label="Logout" 
+                        icon="pi pi-sign-out"
+                        iconPos="left" 
+                        class="p-button-text p-text-left"
+                        (click) = "logout()"
+                        style="width:12rem;"
+                        id="logoutButton">
+                </button>
+
+            </div>
+        </div>
+    </p-sidebar>
+
+    <p-dialog header = "Create Statation"
+              [(visible)] = "createStation"
+              [style] = "{width: '70vw'}"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+              position="top">
+        <app-create-station></app-create-station>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="onCreateStation()" label="Confirm" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog header = "Stations"
+              [(visible)] = "viewStations"
+              [style] = "{width: '60vw'}"
+              position = "center"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
+
+              <app-view-station [stations] = "stations">
+
+              </app-view-station>
+
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-times" (click)="closeStationView()" label="Close" styleClass="p-button-text"></p-button>
+            </ng-template>
+        
+    </p-dialog>
+
+    <p-dialog header = "Fleet"
+              [(visible)] = "createFleet"
+              [style] = "{width: '60vw'}"
+              position = "center"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
+            
+            <app-create-fleet></app-create-fleet>
+
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-times" (click)="closeFleetView()" label="Close" styleClass="p-button-text"></p-button>
+            </ng-template>
+        
+    </p-dialog>
+    
+    <p-dialog header = "Fleets"
+              [(visible)] = "viewFleets"
+              [style] = "{width: '60vw'}"
+              position = "center"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
+            
+            <app-view-fleet [fleets] = "fleets"></app-view-fleet>
+
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-times" (click)="closeFleetView()" label="Close" styleClass="p-button-text"></p-button>
+            </ng-template>  
+    </p-dialog>
+
+
+
+
+
+
+
+
+    <div class="p-grid p-fluid  p-jc-between " id="parentGridContainer">
+        <div class="p-col-12" id="topSide">
+
+            <div class="p-grid p-jc-between" id="top-side-grid">
+
+                <div class="p-col-3" id="sidebar-button" style="width: 120px;">
+                    <button pButton
+                            type="button"
+                            class="p-button-text" 
+                            (click) = "sideMenu = true" 
+                            icon="pi pi-bars"
+                            icoPos = "left"
+                            label = "Menu"
+                              
+                              >
+                    </button>
+                </div>
+
+                <div class="p-col-3 " id="most-right-menu-item" style="width: 150px;">
+
+                </div>
+
+            </div>
+        </div>
+        <p-card class="p-col-12" styleClass="p-card-shadow" id = "mainCard">
+            <!--DashBoard Tab view-->
+            <p-tabView styleClass="tabview-custom">
+                <p-tabPanel>
+                    <ng-template pTemplate = "header">
+                        <i class="pi pi-desktop"></i>
+                        <span style="margin-left: 10px;">Dashboard</span>
+                    </ng-template>
+                    <div class="p-grid">
+                        <div class="p-col-12">
+                            <p-menubar [model] = "menuItems"></p-menubar>
+    
+                        </div>
+                        
+                        <div class="p-col-12" id="scheduleDataView">
+                            <!--Routes Schedule Types Tabview -->
+                            <p-tabView styleClass="tabview-custom">
+
+                                <!--Local Schedules tab -->
+                                <p-tabPanel>
+                                    <ng-template pTemplate = "header">
+                                        <i class="pi pi-date"></i>
+                                        <span style="margin-left: 10px;">Local Schedule</span>
+                                    </ng-template>
+
+                                    <app-view-schedule [schedules] = "localSchedules"></app-view-schedule>
+                                </p-tabPanel>
+
+                                <!--Intercity Schedule Tab-->
+                                <p-tabPanel>
+                                    <ng-template pTemplate = "header">
+                                        <i class="pi pi-desktop"></i>
+                                        <span style="margin-left: 10px;">Intercity Schedule</span>
+                                    </ng-template>
+                                    <app-view-schedule [schedules] = "intercitySchedules"></app-view-schedule>
+                                </p-tabPanel>
+
+                                <!-- International Schedule Tab -->
+                                <p-tabPanel>
+                                    <ng-template pTemplate = "header">
+                                        <i class="pi pi-desktop"></i>
+                                        <span style="margin-left: 10px;">International Schedule</span>
+                                    </ng-template>
+
+                                    <app-view-schedule [schedules] = "internationalSchedules"></app-view-schedule>
+                                </p-tabPanel>
+
+                                <!--Route Tab-->
+                                <p-tabPanel>
+                                    <ng-template pTemplate = "header">
+                                        <i class="pi pi-map"></i>
+                                        <span style="margin-left: 10px;">Routes</span>   
+                                    </ng-template>
+                                    <app-view-route [itravelRoutes] = "routes"
+                                                    (viewByType) = "setRoutes($event)"
+                                                    (updateScheduleList) = "updateSchedule()">
+
+                                    </app-view-route>
+                                </p-tabPanel>
+
+                                 <!-- Rural Schedule Tab -->
+                                 <p-tabPanel>
+                                    <ng-template pTemplate = "header">
+                                        <i class="pi pi-desktop"></i>
+                                        <span style="margin-left: 10px;">Rural Schedule</span>
+                                    </ng-template>
+
+                                    <app-view-schedule [schedules] = "ruralSchedules"></app-view-schedule>
+                                </p-tabPanel>
+                            </p-tabView>
+
+                        </div>
+                       
+                    </div>
+                
+                </p-tabPanel>
+                
+            </p-tabView>
+
+        </p-card>
+    </div>
+
+</div>

@@ -15,6 +15,8 @@ export class RoutesComponent implements OnInit {
   @Input() public routeType: string = '';
   @Output() private buyTicket: EventEmitter<ItravelRoute>;
 
+
+
   sortOptions: SelectItem[] =[];
   sortOrder: number = 1;
   sortField: string = '';
@@ -29,5 +31,6 @@ export class RoutesComponent implements OnInit {
   onBuyTicketEvent(event: Event, route: ItravelRoute) {
     this.buyTicket.emit(route);
   }
+
 
 }

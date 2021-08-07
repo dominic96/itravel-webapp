@@ -1,0 +1,121 @@
+<div class="viewStationParent">
+    <p-dataView [value] = "stations">
+        <ng-template pTemplate="header">
+            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        </ng-template>
+
+        <ng-template let-station pTemplate="listItem" >
+            <div class="p-grid" id="listCard">
+                <div class="p-col-3" id="icon">
+                </div>
+        
+                <div class="p-col-9" id="infoAndButtons">
+                    <div class="p-grid" id="info">
+                        <div class="p-col-6 label" id="stationName">
+                            <p class="stationName">{{station.name}}</p>
+                        </div>
+                        <div class="p-col-6 label" id="stationLocation">
+                            <p class="stationLocation">{{station.country}},{{station.city}}</p>
+                        </div>
+                        <div class="p-col-6 label" id="addDockButton">
+                            <button pButton 
+                                    pRipple 
+                                    type="button" 
+                                    label="Docks" 
+                                   
+                                    class="p-button-text p-button-rounded p-button-sm"
+                                    styleClass="p-button-sm"
+                                    iconPos ="right"
+                                    icon= "pi pi-plus"
+                                    (click) ="createDockList(station)">
+                                    <p-badge value="{{station.docks}}"></p-badge>
+                            </button>
+        
+                        </div>
+                        <div class="p-col-6 label" id="moreBotton">
+                            <button pButton 
+                                    pRipple 
+                                    type="button" 
+                                    label="More Info" 
+                                    class="p-button-outlined p-button-rounded p-button-sm"
+                                    styleClass="p-button-sm"
+                                    iconPos="right"
+                                    icon="pi pi-info-circle">
+                            </button>
+                        </div>
+        
+                    </div>
+                </div>
+        
+            </div>
+
+            <p-dialog header = "Create Dock"
+                      [(visible)] = "onCreateDockinList"
+                      [style] = "{width: '50vw'}"
+                      [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                      position="center">
+
+
+                <app-create-dock [stations] = "stations" [originStation] = "originStation"></app-create-dock>
+                
+            </p-dialog>
+            
+        </ng-template>
+
+        <ng-template let-station pTemplate = "gridItem">
+            <div class="p-col-12   p-md-4 card" id="card">
+                <div class="p-grid card ">
+                    <div class="p-col-12 imgBox">
+                    </div>
+
+                    <div class="p-col-12 glabels" id="gname">
+                        <p class="pName">{{station.name}} <br/> {{station.country}}, {{station.city}}</p>
+
+                    </div>
+                    <div class="p-col-6 docksButton glabels" id="gbutton">
+                        <button pButton 
+                                pRipple 
+                                type="button" 
+                                label="Docks" 
+                                (click) = "createDockGrid(station)"
+                                class="p-button-text p-button-rounded p-button-sm"
+                                styleClass="p-button-sm"
+                                iconPos ="right"
+                                icon= "pi pi-plus">
+                                <p-badge value="{{station.docks}}"></p-badge>
+                        </button>
+                    </div>
+                    <div class="p-col-6 moreButton glabels" id="gmore">
+                        <button pButton 
+                                pRipple 
+                                type="button" 
+                                label="Info" 
+                                class="p-button-text p-button-rounded p-button-sm"
+                                styleClass="p-button-sm"
+                                iconPos="right"
+                                icon="pi pi-info-circle">
+                        </button>
+                    </div>
+
+                </div>
+                
+
+            </div>
+
+            <p-dialog header = "Create Dock"
+                        [(visible)] = "onCreateDockinGrid"
+                        [style] = "{width: '50vw'}"
+                        [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                        position="center">
+
+
+                <app-create-dock [stations] = "stations" [originStation] = "originStation"></app-create-dock>
+      
+            </p-dialog>
+
+        </ng-template>
+
+    </p-dataView>
+    
+
+</div>

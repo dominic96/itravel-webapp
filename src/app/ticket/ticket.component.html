@@ -1,5 +1,12 @@
 <div id="ticket-containter">
+
+
+    
+
     <p-dataView [value]="tickets">
+
+        
+
         <ng-template pTemplate = "header">
             <div class="p-d-flex p-jc-between">
                 <div class="p-mr-2">
@@ -20,10 +27,23 @@
 
         </ng-template>
 
-        <ng-template let-ticket pTemplate="gridItem">
+        <ng-template let-ticket pTemplate="gridItem" class="p-text-capitalize p-text-center">
+
+
+            <p-dialog header="Scan Boarding Pass"
+                      [(visible)]="qrcode"
+                      [style] = "{width: '50vw'}"
+                      [breakpoints] = "{'960px': '75vw', '640px': '100vw'}"
+                      position = "center"
+                      class="p-text-center p-text-capitalize"
+                      id="barcode-dialog">
+                   
+                    <qr-code [value]="dataToString" [size]= "size" ></qr-code>
+            </p-dialog>
+
             <div class="p-col-12 p-md-3">
                 <p-card styleClass="p-card-shadow" [style]= "{width:'280px', 'margin-bottom':'5px'}">
-                    <ng-template pTemplate = "header" [style] ="{'margin':'5px'}">
+                    <ng-template pTemplate = "header" >
                         <div class="p-d-flex p-jc-center" >
                           <div class="p-col-12 p-text-center">
                             <label>Boarding Pass</label>
@@ -56,7 +76,7 @@
                             <div class="p-col-8">
                                <button pButton type="button" label="Scan Boarding Pass" icon ="pi pi-ticket" 
                                        class="p-button-outlined" badge ="open" badgeClass = "p-badge-info"
-                                        >
+                                        (click) = "showBarcodeDailog(ticket)">
                                 </button>
                             </div>
 
@@ -69,7 +89,18 @@
 
         </ng-template>
         
-        <ng-template let-ticket pTemplate="listItem">
+        <ng-template let-ticket pTemplate="listItem" class="p-text-capitalize p-text-center">
+
+            <p-dialog header="Scan Boarding Pass"
+                      [(visible)]="qrcode"
+                      [style] = "{width: '50vw'}"
+                      [breakpoints] = "{'960px': '75vw', '640px': '100vw'}"
+                      position = "center"
+                      class="p-text-center p-text-capitalize"
+                      id="barcode-dialog">
+                      <qr-code [value]="dataToString" [size]= "size" ></qr-code>
+            </p-dialog>
+
             <div class="p-col-12">
                 <p-card styleClass="p-card-shadow">
                     <ng-template pTemplate = "header">
@@ -95,6 +126,7 @@
                             <div>
                                <button pButton type="button" label="Scan Boarding Pass" icon ="pi pi-ticket" 
                                        class="p-button-outlined" badge ="open" badgeClass = "p-badge-info"
+                                       (click) = "showBarcodeDailog(ticket)"
                                        >
                                 </button>
                             </div>

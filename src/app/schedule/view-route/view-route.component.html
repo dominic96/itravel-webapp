@@ -1,0 +1,151 @@
+<div class="routeParentContain">
+    <p-dataView [value] = "itravelRoutes">
+        <ng-template pTemplate="header">
+            <div class="p-grid p-fluid p-jc-between">
+                <div class=" p-col-1">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+                <div class="p-col-2">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input type="text" pInputText placeholder="Search" [(ngModel)]="type" />
+                    </span>
+
+                </div>
+
+                <div class="p-col-2">
+                    <p-dropdown [options] ="types" 
+                                [(ngModel)] = "routeType"
+                                placeholder = "View by Type"
+                                [showClear] = "true"
+                                (onChange) = "onChange()">
+                    </p-dropdown>
+                </div>
+
+            </div>
+            
+        </ng-template>
+
+        <ng-template pTemplate = "listItem" let-route>
+            <div class="p-grid" id="listCard">
+                <div class="p-col-3" id="icon">
+                    <!-- Route Icon-->
+                </div>
+                <div class="p-col-9" id="infoAndButtons">
+                    <div class="p-grid" id="info">
+                        <div class="p-col-5" id="origin">
+                            <p class="names">{{route.originStation}}</p>
+
+                        </div>
+                        <div class="p-col-2">
+                            <p class="names">~~~</p>
+                        </div>
+                        <div class="p-col-5" id="destination">
+                            <p class="names">{{route.destinationStation}}</p>
+
+                        </div>
+
+                        <div class="p-col-6 label" id="addToScheduleBtn">
+                            <button pButton 
+                                    pRipple 
+                                    type="button" 
+                                    label="Add to Schedule" 
+                           
+                                    class="p-button-text p-button-rounded p-button-sm"
+                                    styleClass="p-button-sm"
+                                    iconPos ="right"
+                                    icon= "pi pi-plus"
+                                    (click) ="showDialogList(route)">
+
+                            </button>
+
+                        </div>
+                        <div class="p-col-6 label" id="moreBotton">
+                            <button pButton 
+                                    pRipple 
+                                    type="button" 
+                                    label="More Info" 
+                                    class="p-button-outlined p-button-rounded p-button-sm"
+                                    styleClass="p-button-sm"
+                                    iconPos="right"
+                                    icon="pi pi-info-circle">
+                            </button>
+                        </div>
+        
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </ng-template>
+
+        <!--Grid View -->
+        <ng-template let-route pTemplate = "gridItem">
+            <div class="p-col-12 p-md-4" id="gridCard">
+                <div class="p-grid card">
+                    <div class="p-col-12 imgBox">
+                        <!--Image-->
+                    </div>
+
+                    <div class="p-col-12 glabels" id="gname">
+                        <p class="pName">
+                            {{route.originStation}} <br> ~~ <br> {{route.destinationStation}}
+
+                        </p>
+
+                    </div>
+                    <div class="p-col-6 docksButton glabels" id="gbutton">
+                        <button pButton 
+                                pRipple 
+                                type="button" 
+                                label="Schedule" 
+                                (click) = "showDialogList(route)"
+                                class="p-button-text p-button-rounded p-button-sm"
+                                styleClass="p-button-sm"
+                                iconPos ="right"
+                                icon= "pi pi-plus">
+                        </button>
+                    </div>
+
+                    <div class="p-col-6 moreButton glabels" id="gmore">
+                        <button pButton 
+                                pRipple 
+                                type="button" 
+                                label="Info" 
+                                class="p-button-text p-button-rounded p-button-sm"
+                                styleClass="p-button-sm"
+                                iconPos="right"
+                                icon="pi pi-info-circle">
+                        </button>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </ng-template>
+    </p-dataView>
+
+  
+
+    <p-dialog header = "Schedule Route"
+                [(visible)] = "dialog"
+                position = "center"
+                [style] = "{width: '50vw', height: '50vw'}"
+                [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                appendTo="body" 
+                [modal] = "true" 
+                [resizable] = true >
+        <app-create-schedule [routeId] = "route.routeId"
+                             [vehicles] = "vehicles"
+                             [drivers] = "drivers"
+                             (updateScheduleList)="updateSchedule()">
+
+        </app-create-schedule>
+
+    </p-dialog>
+
+</div>

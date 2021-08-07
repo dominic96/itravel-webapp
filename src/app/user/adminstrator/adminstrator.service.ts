@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
+import { ServiceProvider } from '../service-provider';
 import { User } from '../user';
 import { Adminstrator } from './adminstrator';
 
@@ -19,20 +21,34 @@ export class AdminstratorService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
   userId: number;
+  private adminSubject: BehaviorSubject<Adminstrator>;
+  private admin : Observable<Adminstrator>;
 
   private baseUrl = "http://localhost:8080/itravel/rest/adminstrator";
 
-  constructor(private authenticationService: AuthenticationService, private http: HttpClient) { 
+  constructor(private authenticationService: AuthenticationService, private http: HttpClient,private router: Router) { 
       this.userId = authenticationService.userValue.userId;
+      this.userId = authenticationService.userValue.userId;
+      this.adminSubject = new BehaviorSubject<Adminstrator>(JSON.parse(localStorage.getItem('admin') || '{}'));
+      this.admin = this.adminSubject.asObservable();
   }
 
-  public getAccont(): Observable<Adminstrator> {
+  public getAdminValue(): Adminstrator {
+    return this.adminSubject.value;
+  }
+
+  public getAccount(): Observable<Adminstrator> {
     console.log(`The userId for the Adminstrator is: ${this.userId}`);
     const url = `${this.baseUrl}/get/${this.userId}`;
     return this.http.get<Adminstrator>(url, this.httpOptions)
                       .pipe(
-                        tap(admin => this.log(`Successfully Fetched Adminstrator with userId : ${admin.userId}`)),
-                        catchError(this.handleError<Adminstrator>(`getAccount userId : ${this.userId}`))
+                        tap(admin => {
+                          this.log(`Successfully Fetched Adminstrator with userId : ${admin.userId}`);
+                          localStorage.setItem('admin', JSON.stringify(admin));
+                          this.adminSubject.next(admin);
+                          console.log("Stored admin in local storage");
+                        })
+                        
                       );
 
   }
@@ -46,6 +62,42 @@ export class AdminstratorService {
                         catchError(this.handleError<User[]>(`getLoggedInUsers`))
                       );
   }
+
+  public createServiceProvider(serviceProvider: ServiceProvider): Observable<any> {
+
+    const url = "http://localhost:8080/itravel/rest/serviceprovider/register";
+    return this.http.post<any>(url, serviceProvider, this.httpOptions)
+                      .pipe(
+                        tap( _=> console.log("Create ServiceProvider"))
+                      )
+  }
+
+  public getServiceProviders(): Observable<ServiceProvider[]> {
+
+    const url = "http://localhost:8080/itravel/rest/serviceprovider/getall";
+    return this.http.get<ServiceProvider[]>(url, this.httpOptions)
+                      .pipe(
+                        tap(serviceProviders =>(console.log(`retrieved ${serviceProviders.length} Service Providers`)))
+                      );
+  }
+
+  public logout(): Observable<any> {
+    console.log("Logging out Commuter");
+
+    const url = `http://localhost:8080/itravel/rest/users/logout/${this.userId}`;
+    return this.http.get<any>(url, this.httpOptions)
+                  .pipe(
+                    tap(_ => {
+                      localStorage.removeItem('user');
+                      localStorage.removeItem('commuter');
+                      this.router.navigate(['/login/login']);
+                      console.log('Logging out in commuter service');
+                    }),
+                    catchError(this.handleError<any>(`logout : commuter`))
+                  );
+  }
+
+  
 
   /**
    * 

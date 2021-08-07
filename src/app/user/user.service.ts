@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
 
 import { User } from "./user";
+import { Driver } from './driver';
 
 /**
  * @author Dominic Mundirewa
@@ -47,4 +48,33 @@ export class UserService {
 
 
    }
+
+   public createDriver(driver: Driver): Observable<any> {
+     const url = `${this.baseUrl}/rest/driver/register`;
+
+     return this.http.post<any>(url, driver, this.httpOptions)
+                        .pipe(
+                          tap(_=> {console.log("Registered a Driver");})
+                        );
+   }
+
+   public getAllDrivers(): Observable<Driver[]> {
+     const url = `${this.baseUrl}/rest/driver/getdrivers`;
+     return this.http.get<Driver[]>(url, this.httpOptions)
+                        .pipe(
+                          tap(drivers => {
+                            console.log(`retrieved ${drivers.length} drivers`)
+                          })
+                        );
+   }
+
+   public getFreeDrivers(): Observable<Driver[]> {
+    const url = `${this.baseUrl}/rest/driver/freedrivers`;
+    return this.http.get<Driver[]>(url, this.httpOptions)
+                       .pipe(
+                         tap(drivers => {
+                           console.log(`retrieved ${drivers.length} free drivers`)
+                         })
+                       );
+  }
 }

@@ -1,0 +1,209 @@
+<div class="AddUserParent">
+    <p-toast position="top-right"></p-toast>
+    <p-dialog header = "Add User"
+                [(visible)] = "addUser"
+                [style] = "{width: '30vw'}"
+                [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                positon = "center">
+
+        <h1>Select User type</h1>
+        <div *ngFor = "let user of userTypes" class="p-field-checkbox">
+            <p-radioButton [inputId]="user.key" name="user" [value]="user" [(ngModel)]="selectedUserType"></p-radioButton>
+            <label [for]="user.key">{{user.type}}</label>
+
+        </div>
+
+        <ng-template pTemplate = "footer">
+            <button pButton 
+                    pRipple 
+                    type="button" 
+                    label="Next " 
+                    class="p-button-outlined p-button-rounded p-button-sm"
+                    styleClass="p-button-sm"
+                    iconPos="right"
+                    icon="pi pi-angle-double-right"
+                    (click) = onAddUser()>
+            </button>
+        </ng-template>
+
+    </p-dialog>
+
+    <p-dialog header = "Add Service Provider"
+                [(visible)] = "addSP"
+                [style] = "{width: '50vw'}"
+                [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                positon = "center">
+    
+        <p-card header = "Enter Service Provider Information"
+                [style] = "{width: '600px'}"
+                styleClass = "p-card-shadow"
+                class="p-grid p-fluid p-jc-center">
+            <ng-template pTemplate = "header" id="header">
+                <p class="header">Service Provider</p>
+            </ng-template>
+
+            <div class="p-col-12 p-fluid p-jc-center">
+                <form class="p-grid p-fluid p-jc-center"
+                      [formGroup] = "spForm"
+                      (ngSubmit) = "createServiceProvider()">
+
+                    <div class="p-col-6">
+                        <input type="text" formControlName="name" id="name" pInputText placeholder="Company Name"> 
+
+                    </div>
+
+                    <div class="p-col-6">
+                        <input type="text" formControlName="email" id="email" pInputText placeholder="EmailAddress"> 
+
+                    </div>
+                    
+                    <div class="p-col-6">
+                        <p-dropdown [options] ="types" 
+                                    formControlName = "type"
+                                    placeholder = "Select Type"
+                                    [showClear] = "true">
+
+                        </p-dropdown>
+                    </div>
+
+                    <div class="p-col-6">
+                        <textarea [rows]="3" 
+                                  [cols]="30" 
+                                  pInputTextarea 
+                                  
+                                  formControlName = "description"
+                                  placeholder="Description">
+
+                        </textarea>
+                    </div>
+
+                    <div class="p-col-12">
+                        <div class="p-grid p-fluid p-jc-between">
+                            <div class="p-col-4">
+                                <button pButton pRipple type="button" 
+                                        label="Cancel" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-times" 
+                                        iconPos="right" 
+                                        (click) = "cancelServiceProvider()">
+                                </button>
+                            </div>
+
+                            <div class="p-col-4">
+                                <button pButton pRipple type="submit" 
+                                        label="Create" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-check" 
+                                        iconPos="right" >
+                                </button>
+                            </div>
+                        </div> 
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div *ngIf = "loading">
+                <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}" label = "saving Service Provider..."></p-progressBar>
+                <p>creating Service Provider...</p>
+            </div>
+        </p-card>
+    </p-dialog>
+
+    <p-dialog header = "Add Staff"
+              [(visible)] = "addStaff"
+              [style] = "{width: '50vw'}"
+              [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+              positon = "center" >
+        
+        <p-card header = "Enter Staff Information"
+                [style] = "{width: '600px'}"
+                styleClass = "p-card-shadow"
+                class="p-grid p-fluid p-jc-center">
+            <div class="p-col-12 p-jc-center">
+                <form   class="p-grid p-fluid p-jc-center"
+                        [formGroup] = "staffForm"
+                        (ngSubmit) = "createStaff()">
+                    
+                    <div class="p-col-6">
+                        <input type="text" formControlName="firstname" id="firstname" pInputText placeholder="Firstname"> 
+                    </div>
+
+                    <div class="p-col-6">
+                        <input type="text" formControlName="lastname" id="lastname" pInputText placeholder="Lastname"> 
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" formControlName="email" id="email" pInputText placeholder="Email"> 
+                    </div>
+
+                    <div class="p-col-6">
+                        <input type="text" formControlName="password" id="password" pInputText placeholder="Password"> 
+                    </div>
+
+                    <div class="p-col-7">
+                        <p-dropdown [options] ="posts" 
+                                    formControlName = "post"
+                                    placeholder = "Select Type"
+                                    [showClear] = "true"
+                                    (onChange) = "onChange()">
+
+                        </p-dropdown>
+                    </div>
+
+                    <div *ngIf = "post == 'Driver'" class="p-col-6">
+                        <input type="text" formControlName="nationalId" id="nationalId" pInputText placeholder="National ID"> 
+                    </div>
+                    <div *ngIf = "post == 'Driver'" class="p-col-6">
+                        <p-dropdown [options] ="securityLevels" 
+                                    formControlName = "clearance"
+                                    placeholder = "Select security Level"
+                                    [showClear] = "true">
+
+                        </p-dropdown>
+                    </div>
+
+
+
+                    <div class="p-col-12">
+                        <div class="p-grid p-fluid p-jc-between">
+                            <div class="p-col-4">
+                                <button pButton pRipple type="button" 
+                                        label="Cancel" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-times" 
+                                        iconPos="right" 
+                                        (click) = "cancelAddStaff()">
+                                </button>
+                            </div>
+
+                            <div class="p-col-4">
+                                <button pButton pRipple type="submit" 
+                                        label="Create" 
+                                        class="p-button-outlined" 
+                                        icon="pi pi-check" 
+                                        iconPos="right" >
+                                </button>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+            <div *ngIf = "loading">
+                <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}" label = "creating station..."></p-progressBar>
+                <p>creating station...</p>
+            </div>
+
+        </p-card>
+
+    </p-dialog>
+
+
+</div>

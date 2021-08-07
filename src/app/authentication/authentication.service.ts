@@ -71,7 +71,7 @@ export class AuthenticationService {
   }
 
   public register(user: NewUser): Observable<User> {
-    const url = `${this.baseUrl}/users/create`;
+    const url = `${this.baseUrl}/users/signup`;
     return this.http.post<User>(url, user, this.httpOptions)
                       .pipe(
                         tap( newuser => `Successfully registered user with userId: ${newuser.userId}`),

@@ -33,3 +33,16 @@
         stroke-dashoffset: -124px;
     }
 }
+
+.login-container{
+    background-image: url(../../../assets/images/background5.jpg);
+    background-repeat: no-repeat;
+    height: 1000px;
+}
+
+.header{
+    font-size: 20px;
+    font-weight: bolder;
+    text-decoration-color: rgb(130, 142, 182);
+    padding: 10px;
+}

@@ -1,20 +1,17 @@
 <div class="commuter-parent-containter">
     <p-toast position="top-right"></p-toast>
-    <p-sidebar [(visible)] = "sideMenu" [style]="{width:'15em'}" >
+    <p-sidebar [(visible)] = "sideMenu" [style]="{width:'15em'}" class="sideBar">
+        <div class="p-d-flex p-flex-column p-text-capitalize" id="sideBar">
 
-
-        <div class="p-d-flex p-flex-column p-text-capitalize">
-
-            <div class="p-col-12 p-md-4">
+            <div class="p-col-12 p-md-4" id="avatarContainer">
                 <div class="card">
-                    <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
-                    <p-footer>
-                        <p>Username</p>
-                    </p-footer>
+                   
                 </div>
+                <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
+                {{commuter.email}}
             </div>
 
-            <div class="p-col-12" >
+            <div class="p-col-12" id="buttonContainer">
                 <button pButton 
                         type="button" 
                         label="Logout" 
@@ -22,33 +19,34 @@
                         iconPos="left" 
                         class="p-button-text p-text-left"
                         (click) = "logout()"
-                        autofocus
-                        style="width:12rem;">
+                        style="width:12rem;"
+                        id="logoutButton">
                 </button>
 
             </div>
         </div>
     </p-sidebar>
 
+    <!-- Purchase Ticket Dailog-->
     <p-dialog header="Purchase Ticket" 
-              [(visible)]="purchaseTicket"
+              [(visible)]="ticketDialog"
               [style] = "{width: '50vw'}"
               [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
               position="top"
               class="p-text-center p-text-capitalize"
               id="ticket-purchase-dialog">
             <div>
-                <p>Origin:              {{route.origin}}</p>
-                <p>Destination:         {{route.destination}}</p>
-                <p>Est Departure Time:  {{route.departureTime}}</p>
-                <p>Est Arrival Time:    {{route.arrivalTime}}</p>
-                <p>Price:               ${{route.price}}</p>
+                <p>Origin:              {{ticket.origin}}</p>
+                <p>Destination:         {{ticket.destination}}</p>
+                <p>Departure Time:  {{ticket.departureTime}}</p>
+                <p>Price:               ${{ticket.price}}</p>
             </div>
             <ng-template pTemplate="footer">
-                <p-button icon="pi pi-check" (click)="onConfirmPurchase()" label="Confirm" styleClass="p-button-text"></p-button>
+                <p-button icon="pi pi-check" (click)="purchaseTicket()" label="Confirm" styleClass="p-button-text"></p-button>
             </ng-template>
     </p-dialog>
 
+    <!-- Boarding Pass QR Code dialog-->
     <p-dialog header="Boarding Passes" 
               [(visible)]="boardingPass"
               [style] = "{width: '50vw'}"
@@ -64,31 +62,41 @@
             </ng-template>
     </p-dialog>
 
+    
+
+
 
     
 
-    <div class="p-grid p-fluid" id="commuter-parent-grid">
-        <div class="p-col-12" id="top-side">
+    <div class="p-grid p-fluid  p-jc-between " id="commuter-parent-grid">
+        <div class="p-col-12" id="topSide">
 
-            <div class="p-grid p-fluid p-ai-start vertical-container" id="top-side-grid">
+            <div class="p-grid p-jc-between" id="top-side-grid">
 
-                <div class="p-col" id="sidebar-button">
-                    <p-button type="text" (click) = "sideMenu = true" icon="pi pi-bars" label="Show">
-                    </p-button>
+                <div class="p-col-3" id="sidebar-button" style="width: 120px;">
+                    <button pButton
+                            type="button"
+                            class="p-button-text" 
+                            (click) = "sideMenu = true" 
+                            icon="pi pi-bars"
+                            icoPos = "left"
+                            label = "Menu"
+                              
+                              >
+                    </button>
                 </div>
 
-                <div class="p-col" id="middle-menu-item">
-                    <div class="box"></div>
-
-                </div>
-
-                <div class="p-col" id="most-right-menu-item">
-                    <p-button type="text" 
-                              (click) = "showBoardingPass()" 
-                              icon="pi pi-ticket" 
-                              label="View Tickets / Passes"
-                              position= "bottom">
-                    </p-button>
+                <div class="p-col-3 " id="most-right-menu-item" style="width: 150px;">
+                    <button pButton
+                            type="button"
+                            class="p-button-text" 
+                            (click) = "showBoardingPass()" 
+                            icon="pi pi-ticket" 
+                            iconPos = "left"
+                            label = "Passes"
+                              
+                             >
+                    </button>
 
                 </div>
 
@@ -96,53 +104,76 @@
         </div>
 
         
-        <p-card  class="p-col-12" styleClass="p-card-shadow">
+        <p-card  class="p-col-12" styleClass="p-card-shadow" id = "mainCard">
             <p-tabView styleClass="tabview-custom">
-                <p-tabPanel>
-                   <ng-template pTemplate = "header" >
-                        <i class="pi pi-home"></i>
-                        <span style="margin-left: 10px;"> Home</span>
-                   </ng-template>
-                   <p>Home Content / Feed </p>
-                </p-tabPanel>
-
+                <!-- Local Schedules Tab-->
                 <p-tabPanel>
                     <ng-template pTemplate = "header">
                         <i class="pi pi-map"></i>
                         <span style="margin-left: 10px;">Local Routes</span>
                     </ng-template>
-                    <app-routes [routes] = "localRoutes" [routeType] = "routeType" 
-                                (buyTicket) = "onBuyTicketEvent($event)">
-                    </app-routes>
-                    
-                   
+                    <app-view-schedule [schedules] = "localSchedules" 
+                                        (buyTicket) = "confirmTicketPurchase($event)"
+                                        [originStation] = "areas"
+                                        [destinationStation] = "areas"
+                                        [countries] = "countryList"
+                                        (searchSchedule) = "searchLocalSchedules($event)"
+                                        (updateSearchOptions) = "setSearchOptions($event)">
+                    </app-view-schedule>   
                 </p-tabPanel>
+
+                <!-- Intercity Schedule tab-->
                 <p-tabPanel>
                     <ng-template pTemplate = "header">
                         <i class="pi pi-map"></i>
                         <span style="margin-left: 10px;">  Intercity Routes</span>
                     </ng-template>
-                    <app-routes [routes] = "intercityRoutes" [routeType] = "routeType"
-                                (buyTicket) = "onBuyTicketEvent($event)">
 
-                    </app-routes>
-                    <div>
-                       
-                    </div>
+                    <app-view-schedule [schedules] = "intercitySchedules"
+                                       (buyTicket) = "confirmTicketPurchase($event)"
+                                       [originStation] = "cities"
+                                       [destinationStation] ="cities"
+                                       [countries] = "countryList"
+                                       (searchSchedule) = "searchIntercitySchedules($event)"
+                                       (updateSearchOptions) = "setSearchOptions($event)">
+                    </app-view-schedule>
                 </p-tabPanel>
 
 
+                <!--Internation Schedule Tab-->
                 <p-tabPanel>
                     <ng-template pTemplate = "header">
                         <i class="pi pi-map"></i>
-                        <span style="margin-left: 10px;">  InterNational Routes</span>
+                        <span style="margin-left: 10px;">  International Routes</span>
                     </ng-template>
 
-                    <app-routes [routes] = "internationalRoutes" [routeType] = "routeType"
-                                (buyTicket) = "onBuyTicketEvent($event)">
-
-                    </app-routes>
+                    <app-view-schedule [schedules] = "internationalSchedules"
+                                       (buyTicket) = "confirmTicketPurchase($event)"
+                                       [originStation] = "countryList"
+                                       [destinationStation] ="countryList"
+                                       [countries] = "countryList"
+                                       (searchSchedule) = "searchInternationalSchedules($event)"
+                                       (updateSearchOptions) = "setSearchOptions($event)">
+                    </app-view-schedule>
                 </p-tabPanel>
+
+                <!-- Rural Schedule tab-->
+                <p-tabPanel>
+                    <ng-template pTemplate = "header">
+                        <i class="pi pi-map"></i>
+                        <span style="margin-left: 10px;">  Rural Routes</span>
+                    </ng-template>
+
+                    <app-view-schedule [schedules] = "ruralSchedules"
+                                       (buyTicket) = "confirmTicketPurchase($event)"
+                                       [originStation] = "cities"
+                                       [destinationStation] = "cities"
+                                       [countries] = "countryList"
+                                       (searchSchedule) = "searchRuralSchedules($event)"
+                                       (updateSearchOptions) = "setSearchOptions($event)">
+                    </app-view-schedule>
+                </p-tabPanel>
+
             </p-tabView>
         </p-card>
     </div>

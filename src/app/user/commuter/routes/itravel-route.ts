@@ -1,10 +1,12 @@
 export interface ItravelRoute {
     routeId: number;
+    scheduleId: number;
     origin: string;
     destination: string;
-    departureTime: number;
-    arrivalTime: number;
+    departureTime: string;
+    arrivalTime: string;
     price: number;
     operator: string;
     status: string;
 }
+

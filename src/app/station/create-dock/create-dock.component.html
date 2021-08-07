@@ -1,0 +1,77 @@
+<div class="createDockParent">
+    <p-toast position="top-right"></p-toast>
+    <p-card header = "Enter Dock Details"
+            [style] = "{width: '600px'}"
+            styleClass = "p-card-shadow"
+            class="p-grid p-fluid p-jc-center">
+        <div class="p-col-12" id="formContainter">
+            <form class="p-grid p-fluid p-jc-center"
+                  [formGroup] = "dockForm"
+                  (ngSubmit) = "createDock()">
+                
+                <div class="p-col-6">
+                    <input type="text" formControlName="originStation" id="origin" pInputText placeholder="{{originStation.name}}"> 
+                </div>
+                <div class="p-col-6">
+                    <p-dropdown [options] ="routeTypes" 
+                                formControlName = "type" 
+                                placeholder = "Select Route Type"
+                                (onChange) = "onChange()"
+                                [showClear] = "true"
+                                appendTo = "body">
+                    </p-dropdown>
+
+                </div>
+
+                <div *ngIf = "showStationField" class="p-col-6">
+                    <p-dropdown [options] ="stations" 
+                                formControlName = "destinationStation" 
+                                placeholder = "Destination Station"
+                                optionLabel = "name"
+                                optionValue = "stationId"
+                                appendTo = "body"
+                                (onChange) = "setDestination()"
+                                [showClear] = "true">
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-6">
+                    <p-dropdown [options] ="destinations" 
+                                formControlName = "destination" 
+                                placeholder = "Destination"
+                    
+                                [showClear] = "true">
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-12">
+                    <div class="p-grid p-fluid p-jc-end">
+                        <div class="p-col-4">
+                            <button pButton 
+                                    pRipple 
+                                    type="submit" 
+                                    label="Create" 
+                                   
+                                    class="p-button-text p-button-rounded p-button-sm"
+                                    styleClass="p-button-sm"
+                                    iconPos ="right"
+                                    icon= "pi pi-check">
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+        <div *ngIf = "loading">
+            <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+            <p>creating dock...</p>
+        </div>
+
+    </p-card>
+
+</div>

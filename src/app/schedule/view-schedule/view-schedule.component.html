@@ -1,0 +1,105 @@
+<div class="viewScheduleContainer">
+    <p-toast position="top-right"></p-toast>
+    <p-dataView [value] = "schedules">
+        <ng-template pTemplate= "header">
+            <div class="p-grid p-fluid p-jc-between">
+                <div class=" p-col-1">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+
+                <div class="p-col-3">
+                    <p-dropdown [options] ="originStation" 
+                                [(ngModel)] = "origin"
+                                placeholder = "Select Origin"
+                                [showClear] = "true"
+                                (onChange) = "onChange()">
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-3">
+                    <p-dropdown [options] ="destinationStation" 
+                                [(ngModel)] = "destination"
+                                placeholder = "Select Destination"
+                                [showClear] = "true"
+                                (onChange) = "onChange()">
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-3">
+                    <p-dropdown [options] ="countries" 
+                                [(ngModel)] = "country"
+                                placeholder = "Country"
+                                [showClear] = "true"
+                                (onChange) = "onUpdateSearchOption()">
+                    </p-dropdown>
+                </div>
+
+
+            </div>
+        </ng-template>
+
+        <!--List Items -->
+        <ng-template pTemplate = "listItem" let-schedule>
+            <div class="p-grid" id="listCard">
+                <div class="p-col-3" id="icon">
+                    <!-- Schedule Icon-->
+                </div>
+
+                <div class="p-col-6" id="listInfo">
+                    <p class="listNames">{{schedule.origin}} ~~ {{schedule.destination}}</p>
+                    <p class="listTime">{{schedule.departureTime}} ~~ {{schedule.arrivalTime}}</p>
+                </div>
+
+                <div class="p-col-3" id="buttons">
+                    <p class="price">Price: {{schedule.price}}</p>
+                    <button pButton 
+                            pRipple 
+                            type="button" 
+                            label="Buy Ticket"
+                            (click) = "onBuyTicket(schedule)"
+                            class="p-button-text p-button-rounded p-button-sm"
+                            styleClass="p-button-sm"
+                            iconPos="right"
+                            icon="pi pi-ticket">
+                    </button>
+
+
+                </div>
+            </div>
+
+        </ng-template>
+
+        <!--Grid View -->
+        <ng-template let-schedule pTemplate = "gridItem">
+            <div class="p-col-12 p-md-4" id="gridCard">
+                <div class="p-grid p-fluid p-jc-center">
+                    <div class="p-col-12"  id="gridIcon">
+                        <!--grid icon-->
+
+                    </div>
+                    <div class="p-col-12" id="gridInfo">
+                        <p class="gridNames">{{schedule.origin}} ~~ {{schedule.destination}}</p>
+                        <p class="gridTime">{{schedule.departureTime}} <br> {{schedule.arrivalTime}}</p>
+                        <p class="price">Price: ${{schedule.price}}</p>
+                    </div>
+                    <div class="p-col-6">
+                        <button pButton 
+                                pRipple 
+                                type="button" 
+                                label="Buy Ticket" 
+                                (click) = "onBuyTicket(schedule)"
+                                class="p-button-text p-button-rounded p-button-sm"
+                                styleClass="p-button-sm"
+                                iconPos="right"
+                                icon="pi pi-ticket">
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+
+
+</div>

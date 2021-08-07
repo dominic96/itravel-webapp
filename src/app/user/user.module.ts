@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
 import { CommuterComponent } from './commuter/commuter.component';
 import { AdminstratorComponent } from './adminstrator/adminstrator.component';
+import { FleetModule } from "../fleet/fleet.module";
+import { ScheduleModule } from "../schedule/schedule.module";
 
 
 
@@ -24,9 +27,19 @@ import { BadgeModule} from "primeng/badge";
 import { DialogModule } from "primeng/dialog";
 import { ToastModule } from "primeng/toast";
 import { AvatarModule } from "primeng/avatar";
+import { MenubarModule } from "primeng/menubar";
+import { RadioButtonModule } from "primeng/radiobutton";
+import { ProgressBarModule } from "primeng/progressbar";
+import { InputTextareaModule } from "primeng/inputtextarea";
+
+import { QRCodeModule } from "angular2-qrcode";
+import { StationModule } from "../station/station.module";
 
 import { RoutesComponent } from './commuter/routes/routes.component';
 import { TicketComponent } from '../ticket/ticket.component';
+import { QrcodeComponent } from "../qrcode/qrcode.component";
+import { AddUserComponent } from './add-user/add-user.component';
+
 
 
 
@@ -37,7 +50,9 @@ import { TicketComponent } from '../ticket/ticket.component';
     CommuterComponent,
     AdminstratorComponent,
     RoutesComponent,
-    TicketComponent
+    TicketComponent,
+    QrcodeComponent,
+    AddUserComponent
   ],
   imports: [
     CommonModule,
@@ -54,11 +69,23 @@ import { TicketComponent } from '../ticket/ticket.component';
     BadgeModule,
     DialogModule,
     ToastModule,
-    AvatarModule
+    AvatarModule,
+    QRCodeModule,
+    MenubarModule,
+    StationModule,
+    RadioButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ProgressBarModule,
+    InputTextareaModule,
+    FleetModule,
+    ScheduleModule
+
   ],
 
   exports:[
-    AdminstratorComponent
+    AdminstratorComponent,
+    QrcodeComponent
   ]
 })
 export class UserModule { }

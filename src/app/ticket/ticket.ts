@@ -9,4 +9,7 @@
     token: string;
     origin: string;
     destination: string;
+    departureTime: string;
+    scheduleId: number;
+    originStation: string;
 }

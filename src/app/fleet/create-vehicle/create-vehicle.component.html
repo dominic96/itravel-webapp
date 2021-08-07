@@ -1,0 +1,60 @@
+<div class="createVehicleParent">
+    <p-toast position="top-right"></p-toast>
+    <p-card header = "Enter Vehicle Details"
+            [style] = "{width: '400px'}"
+            styleClass = "p-card-shadow"
+            class="p-grid p-fluid p-jc-center">
+        <div class="p-col-12" id = "formContainer">
+            <form class="p-grid p-fluid p-jc-center"
+                  [formGroup] = "vehicleForm"
+                  (ngSubmit) = "createVehicle()">
+                
+                <div class="p-col-6">
+                    <p-inputMask mask="aaaa-9999" formControlName = "plateId" placeholder="Licence Plate"></p-inputMask>
+
+                </div>
+                <div class="p-col-6">
+                    <p-dropdown [options] ="types" 
+                                formControlName = "type" 
+                                placeholder = "Select Route Type"
+                                
+                                [showClear] = "true">
+
+                    </p-dropdown>
+                </div>
+                <div class="p-col-6">
+                    <p-inputNumber formControlName="capacity" [min]="15" [max]="100" [showButtons]="true"></p-inputNumber>
+
+                </div>
+                <div class="p-col-12">
+                    <div class="p-grid p-fluid p-jc-end">
+                        <div class="p-col-4">
+                            <button pButton 
+                                    pRipple 
+                                    type="submit" 
+                                    label="Create" 
+    
+                                    class="p-button-text p-button-rounded p-button-sm"
+                                    styleClass="p-button-sm"
+                                    iconPos ="right"
+                                    icon= "pi pi-check">
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+        
+        <div *ngIf = "loading">
+            <p-progressBar  mode="indeterminate" [style]="{'height': '6px'}" ></p-progressBar>
+            <p>creating vehicle..</p>
+        </div>
+
+    </p-card>
+
+</div>

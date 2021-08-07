@@ -38,17 +38,13 @@
                     <ng-template pTemplate = "content">
                         <div class="p-grid p-jc-center">
                             <div class="p-col-12 p-text-center p-text-capitalize">
-                                {{route.origin}}
-                            </div>
-                            <div class="p-col-12 p-text-center p-text-light" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                <label >to</label>
-                            </div>
-                            <div>
-                                {{route.destination}}
-                            </div>
-                            <div class="p-col-12 p-text-center" id="time">
-                                <label>{{route.departureTime}}hrs to {{route.arrivalTime}}hrs </label>
-                            </div>    
+                                <p class="gridRouteNames">
+                                    {{route.origin}} <br/>~<br/>{{route.destination}} 
+                                </p>
+                                <p class="listTime">
+                                    {{route.departureTime}}Hrs<br/>~<br/>{{route.arrivalTime}}Hrs
+                                </p>
+                            </div>  
                         </div>
                     </ng-template>
 
@@ -79,7 +75,7 @@
                     <ng-template pTemplate = "header">
                         <div class="p-d-flex p-jc-between p-text-capitalize p-text-center">
                             <div style="margin: 10px;" class="p-text-capitalize p-text-center">
-                                <i class="pi pi-tag"> Intercity</i>
+                                <i class="pi pi-tag"> {{routeType}}</i>
                             </div>
                             <div style="margin: 10px;" class="p-text-capitalize p-text-center">
                                 {{route.operator}}
@@ -90,10 +86,10 @@
                     <div class="p-d-flex p-jc-between">
                         <div class="p-text-capitalize p-text-center">
                             <div>
-                                {{route.origin}} ~~~ {{route.destination}}
+                                <p class="listRouteNames">{{route.origin}} ~~~ {{route.destination}}</p>
                             </div>
                             <div>
-                                {{route.departureTime}}hrs ~~~ {{route.arrivalTime}}hrs
+                                <p class="listTime">{{route.departureTime}}hrs ~~~ {{route.arrivalTime}}hrs</p>
                             </div>
 
                         </div>
@@ -111,8 +107,6 @@
                          </div>
 
                     </div>
-                    {{route.routeId}}
-
                 </p-card>
 
             </div>

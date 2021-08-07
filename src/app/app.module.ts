@@ -15,6 +15,7 @@ import { TabViewModule } from "primeng/tabview";
 import { DataViewModule } from "primeng/dataview";
 import { PanelModule } from "primeng/panel";
 import { RippleModule } from "primeng/ripple";
+import { DialogModule } from "primeng/dialog";
 
 /**Project Modules */
 
@@ -25,15 +26,23 @@ import { AppComponent } from './app.component';
 /**feature modules */
 import { AuthenticationModule } from "./authentication/authentication.module";
 import { UserModule } from "./user/user.module";
+import { StationModule } from "./station/station.module";
+import { FleetModule } from "./fleet/fleet.module";
+import { ScheduleModule } from "./schedule/schedule.module";
 //import { RoutesComponent } from './routes/routes.component';
 
 import {  JwtInterceptor } from "./utility/jwt.interceptor";
 import { AuthenticationGuard } from "./utility/authentication.guard";
 
 
+//BarcodeModule
+import { QRCodeModule } from "angular2-qrcode";
+//import { QrcodeComponent } from './qrcode/qrcode.component';
+
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
  
   ],
   imports: [
@@ -53,7 +62,12 @@ import { AuthenticationGuard } from "./utility/authentication.guard";
     TabViewModule,
     DataViewModule,
     PanelModule,
-    RippleModule
+    RippleModule,
+    QRCodeModule,
+    DialogModule,
+    StationModule,
+    FleetModule,
+    ScheduleModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor , multi: true}],
   bootstrap: [AppComponent]
