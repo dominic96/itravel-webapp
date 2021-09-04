@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AdminstratorComponent } from './adminstrator/adminstrator.component';
 import { CommuterComponent } from './commuter/commuter.component';
+import { DriverComponent } from './driver/driver.component';
 import { UserComponent } from './user.component';
 
 const routes: Routes = [
@@ -10,7 +11,8 @@ const routes: Routes = [
   children: [
     {path: 'commuter/commuter', component: CommuterComponent},
     {path: 'adminstrator/adminstrator', component: AdminstratorComponent},
-    {path: 'adduser/adduser', component: AddUserComponent}
+    {path: 'adduser/adduser', component: AddUserComponent},
+    {path: 'driver', component: DriverComponent}
   ]
 }
 ];

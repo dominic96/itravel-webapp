@@ -12,4 +12,5 @@
     departureTime: string;
     scheduleId: number;
     originStation: string;
+    phoneNumber?: string;
 }

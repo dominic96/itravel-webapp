@@ -34,6 +34,9 @@ export class AppComponent {
      
       this.router.navigate(['commuter/commuter']);
       
+    }else if (this.user.type == 'driver' ) {
+      this.router.navigate(['driver']);
+      
     } else{
       console.log("no user logged in, navigating to login");
       this.router.navigate(['/login/login']);

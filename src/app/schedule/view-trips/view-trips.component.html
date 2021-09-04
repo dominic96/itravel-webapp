@@ -1,0 +1,72 @@
+<div class="tripsParentContainer">
+    <p-dataView [value] = "trips">
+        <ng-template pTemplate = "header">
+            <div class="p-grid p-fluid p-jc-between">
+                <div class=" p-col-1">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate = "listItem" let-trip>
+            <div class="p-grid" id="listCard">
+                <div class="p-col-3" id="icon">
+                    <!--Route icon -->
+
+                </div>
+                <div class="p-col-5" id="infoBoxL">
+                    <p class="names">{{trip.origin}} ~~ {{trip.destination}}</p>
+                    <p class="time">{{trip.departureTime}} ~~ {{trip.arrivalTime}}</p>
+
+                </div>
+                <div class="p-col-4">
+                    <p-dropdown [options] ="options" 
+                                [(ngModel)] = "status" 
+                                placeholder = "Select Bus Status"
+                                (onChange) = "OnUpdateTrip(trip)"
+                            
+                                [showClear] = "true">
+
+                    </p-dropdown>
+
+                </div>
+
+            </div>
+        </ng-template>
+
+        <ng-template let-trip pTemplate = "gridItem">
+            <div class="p-col-12 p-md-4" id="gridCard">
+                <div class="p-grid card">
+                    <div class="p-col-12 imgBox">
+                        <!-- Route Image -->
+
+                    </div>
+                    <div class="p-col-12" id="gname">
+                        <p class="names">
+                            {{trip.origin}} ~~  {{trip.destination}}
+                        </p>
+                        <p class="time">{{trip.departureTime}} <br> ~~ <br> {{trip.arrivalTime}}</p>
+
+                    </div>
+                    <div class="p-col-12">
+                        <p-dropdown [options] ="options" 
+                                [(ngModel)] = "status" 
+                                placeholder = "Select Bus Status"
+                                (onChange) = "OnUpdateTrip(trip)"
+                            
+                                [showClear] = "true">
+
+                        </p-dropdown>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </ng-template>
+
+    </p-dataView>
+
+</div>

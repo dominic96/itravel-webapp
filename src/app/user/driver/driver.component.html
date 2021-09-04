@@ -1,0 +1,96 @@
+<div class="driverParentContainer">
+    <p-toast position="top-right"></p-toast>
+
+    <!--Side bar with Logout button and account icon-->
+    <p-sidebar [(visible)] = "sideMenu" [style]="{width:'15em'}" class="sideBar">
+        <div class="p-d-flex p-flex-column p-text-capitalize" id="sideBar">
+
+            <div class="p-col-12 p-md-4" id="avatarContainer">
+                <div class="card">
+                   
+                </div>
+                <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
+                {{driver.email}}
+            </div>
+
+            <div class="p-col-12" id="buttonContainer">
+                <button pButton 
+                        type="button" 
+                        label="Logout" 
+                        icon="pi pi-sign-out"
+                        iconPos="left" 
+                        class="p-button-text p-text-left"
+                        (click) = "logout()"
+                        style="width:12rem;"
+                        id="logoutButton">
+                </button>
+
+            </div>
+        </div>
+    </p-sidebar>
+
+    <!-- main card, hosting all the other elements-->
+    <div class="p-grid p-fluid p-jc-between" id="driverParentGrid">
+        <!--Top side with name and a menu button -->
+        <div class="p-col-12 p-jc-between" id="topSide">
+            <div class="p-grid p-jc-between" id="topSideGrid">
+                <div class="p-col-3" id="sidebar-button" style="width: 120px;">
+
+                    <!--Menu button displays the side bar from the left-->
+                    <button pButton
+                            type="button"
+                            class="p-button-text" 
+                            (click) = "sideMenu = true" 
+                            icon="pi pi-bars"
+                            icoPos = "left"
+                            label = "Menu"
+                              
+                              >
+                    </button>
+                </div>
+
+                <!--Most right button , function still to be decided-->
+                <div class="p-col-3 " id="most-right-menu-item" style="width: 150px;">
+                    <button pButton
+                            type="button"
+                            class="p-button-text" 
+                            (click) = "verifyTicket()"
+                            icon="pi pi-ticket" 
+                            iconPos = "left"
+                            label = "Verify Ticket"
+                              
+                             >
+                    </button>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        <!--Card (Grid row ) containing the main content -->
+        <p-card  class="p-col-12" styleClass="p-card-shadow" id = "mainCard">
+            <p-tabView styleClass="tabview-custom">
+               <p-tabPanel>
+                    <ng-template pTemplate = "header">
+                        <i class="pi pi-map"></i>
+                        <span style="margin-left: 10px;">Available Trips</span>
+                    </ng-template>
+
+                    <!--View Trips Component-->
+                    <app-view-trips [trips] = "trips"
+                                    (updateTrip) = "updateTrip($event)">
+
+                    </app-view-trips>
+               </p-tabPanel>
+
+            </p-tabView>
+
+
+        </p-card>
+
+    </div>
+
+</div>

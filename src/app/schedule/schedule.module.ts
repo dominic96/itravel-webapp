@@ -20,6 +20,7 @@ import { Toast, ToastModule } from "primeng/toast";
 import { DialogModule } from "primeng/dialog";
 import { ProgressBarModule } from "primeng/progressbar";
 import { InputText, InputTextModule } from "primeng/inputtext";
+import { ViewTripsComponent } from './view-trips/view-trips.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { InputText, InputTextModule } from "primeng/inputtext";
     ScheduleComponent,
     ViewScheduleComponent,
     ViewRouteComponent,
-    CreateScheduleComponent
+    CreateScheduleComponent,
+    ViewTripsComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { InputText, InputTextModule } from "primeng/inputtext";
   ],
   exports:[
     ViewScheduleComponent,
-    ViewRouteComponent
+    ViewRouteComponent,
+    ViewTripsComponent
   ]
 })
 export class ScheduleModule { }

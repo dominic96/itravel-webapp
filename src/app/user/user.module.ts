@@ -31,6 +31,7 @@ import { MenubarModule } from "primeng/menubar";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { ProgressBarModule } from "primeng/progressbar";
 import { InputTextareaModule } from "primeng/inputtextarea";
+import { InputMaskModule } from "primeng/inputmask";
 
 import { QRCodeModule } from "angular2-qrcode";
 import { StationModule } from "../station/station.module";
@@ -39,6 +40,7 @@ import { RoutesComponent } from './commuter/routes/routes.component';
 import { TicketComponent } from '../ticket/ticket.component';
 import { QrcodeComponent } from "../qrcode/qrcode.component";
 import { AddUserComponent } from './add-user/add-user.component';
+import { DriverComponent } from './driver/driver.component';
 
 
 
@@ -52,7 +54,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     RoutesComponent,
     TicketComponent,
     QrcodeComponent,
-    AddUserComponent
+    AddUserComponent,
+    DriverComponent
   ],
   imports: [
     CommonModule,
@@ -79,7 +82,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     ProgressBarModule,
     InputTextareaModule,
     FleetModule,
-    ScheduleModule
+    ScheduleModule,
+    InputMaskModule
 
   ],
 

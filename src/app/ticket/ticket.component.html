@@ -53,19 +53,14 @@
 
                     <ng-template pTemplate = "content">
                         <div class="p-grid p-jc-center">
-                            <div class="p-col-12 p-text-center p-text-capitalize">
-                                {{ticket.origin}}
-                            </div>
-                            <div class="p-col-12 p-text-center p-text-light" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                <label >to</label>
-                            </div>
-                            <div>
-                                {{ticket.destination}}
+                            <div class="p-col-12 p-text-center p-text-capitalize">   
+                                <p class="names">{{ticket.originStation}}</p>
+                                <p class="names">{{ticket.origin}} ~~ {{ticket.destination}}</p>
+                                <p class="time">  Departure Time: {{ticket.departureTime | slice:5:10}} @{{ticket.departureTime | slice:11:16}}</p>
                             </div>
                             <div class="p-col-12 p-text-center" id="time">
-                                <label>Token: {{ticket.token}}</label>
+                                <p class="token">Token: {{ticket.token}}</p>
                             </div> 
-
 
                         </div>
 
@@ -113,10 +108,12 @@
                     <div class="p-d-flex p-jc-between">
                         <div class="p-text-capitalize p-text-center">
                             <div>
-                                {{ticket.origin}} ~~~ {{ticket.destination}}
+                                <p class="names">{{ticket.originStation}}</p>
+                                <p class="names">{{ticket.origin}} ~~ {{ticket.destination}}</p>
+                                <p class="time">  Departure Time: {{ticket.departureTime | slice:5:10}} @{{ticket.departureTime | slice:11:16}}</p>
                             </div>
                             <div>
-                                Token: {{ticket.token}}
+                                <p class="token">Token: {{ticket.token}}</p>
                             </div>
 
                         </div>

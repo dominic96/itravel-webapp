@@ -9,5 +9,6 @@ export interface Schedule {
     destination: string;
     status: string;
     price: number;
+    serviceProvider: string;
 
 }

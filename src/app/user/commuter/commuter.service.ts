@@ -58,6 +58,7 @@ export class CommuterService {
                         this.log(`Successfully Fetched Commuter account with userId = ${this.userId}`);
                         localStorage.setItem('commuter', JSON.stringify(commuter));
                         this.commuterSubject.next(commuter);
+                      
                         console.log("Saved Commuter in Local storage");
 
                       }),

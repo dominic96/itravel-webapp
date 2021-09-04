@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ItraveRoute } from './itrave-route';
 import { Schedule } from './schedule';
+import { Trip } from './view-trips/trips';
 
 @Injectable({
   providedIn: 'root'
@@ -96,4 +97,26 @@ export class ScheduleService {
                         })
                       );
   }
+
+  public getDriversTrips(driverId: number): Observable<Trip[]> {
+
+    const url = `${this.baseUrl}/driver/trips/${driverId}`;
+
+    return this.http.get<Trip[]>(url, this.httpOptions)
+                      .pipe(
+                        tap( trips => {
+                          console.log(`Fetched ${trips.length} trips`);
+                        })
+                      )
+  }
+
+  public updateTripStatus(trip: Trip): Observable<any> {
+    const url = `${this.baseUrl}/driver/updateTrip`;
+    return this.http.post<any>(url, trip, this.httpOptions)
+                      .pipe(
+                        tap( _ =>(console.log("Bus Status Updated")))
+                      )
+  }
+
+
 }

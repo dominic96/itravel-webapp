@@ -5,6 +5,11 @@
     box-shadow: azure;
 
 }
+#icon{
+    width: 100px;
+    height: 100px;
+    background-image: url(../../../assets/images/icons8-get-on-bus-96.png);
+}
 
 #listIcon{
     height: 96px;
@@ -13,19 +18,22 @@
 
 
 #listInfo{
-    height: 50px;
+    height: 150px;
 }
 
 .listNames{
     height: 25px;
     text-align: center;
     font-weight: bolder;
+    margin: 0px;
+    padding: 0px;
 }
 .listTime{
     height: 25px;
     text-align: center;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
+    margin: 0px;
 }
 
 #buttons{
@@ -41,7 +49,7 @@
 }
 
 #gridCard{
-    height: 200px;
+    height: 300px;
     width: 250px;
     align-content: center;
     margin: 5px;
@@ -52,6 +60,9 @@
 #gridIcon{
     height: 150px;
     width: 150px;
+  
+    background-image: url(../../../assets/images/icons8-get-on-bus-96.png);
+    background-repeat: no-repeat;
 
 }
 
@@ -65,6 +76,7 @@
     height: 20px;
     text-align: center;
     font-weight: bolder;
+    margin: 0px;
 
 }
 

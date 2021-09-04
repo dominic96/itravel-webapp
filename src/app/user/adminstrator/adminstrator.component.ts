@@ -15,6 +15,8 @@ import { ScheduleService } from 'src/app/schedule/schedule.service';
 import { Schedule } from 'src/app/schedule/schedule';
 import { Ticket } from 'src/app/ticket/ticket';
 import { Router } from '@angular/router';
+import { Country } from 'src/app/station/country';
+import { City } from 'src/app/station/city';
 
 
 /**
@@ -50,6 +52,12 @@ export class AdminstratorComponent implements OnInit {
   internationalSchedules: Schedule[] = [];
   ruralSchedules: Schedule[] = [];
 
+  //locations
+  public areas: string[] = [];
+  public cities: string[] = [];
+  public countries: Country[] = [];
+  public countryList: string[] = [];
+
   ticket: Ticket = {ticketId: 0, routeId: 0, price: 0, token: '', origin: '', destination: '', departureTime: '', scheduleId: 0, originStation: ''}; 
 
   constructor(private adminstratorService: AdminstratorService, private stationsService: StationService,
@@ -64,9 +72,11 @@ export class AdminstratorComponent implements OnInit {
     this.setAdmin();
     this.setMenuItems();
     this.setRoutes();
+    this.setRuralSchedules();
     this.setLocalSchedules();
     this.setIntercitySchedules();
     this.setInternationalSchedules();
+    this.setCountriesList();
 
   }
 
@@ -95,6 +105,7 @@ export class AdminstratorComponent implements OnInit {
                                   this.adminstrator = admin;
                                   this.statusMessage = `Admin: ${this.adminstrator.email} logged in successfully`;
                                   this.showSuccess();
+                                  this.setCountriesList();
                                   console.log(this.statusMessage);
 
                                 },
@@ -168,13 +179,6 @@ export class AdminstratorComponent implements OnInit {
         items:[
           {
             label: "Add", routerLink:(["/adduser/adduser"])
-          },
-          {
-            label: "View",
-            items: [
-              {label: "Commuters", routerLink:(["/adduser/adduser"])},
-              {label: "Drivers"}
-            ]
           }
         ]
       }
@@ -243,6 +247,8 @@ export class AdminstratorComponent implements OnInit {
                                 this.routes = routes;
                                 this.statusMessage = `retrieved ${routes.length} routes`;
                                 this.showSuccess();
+                                this.setCountriesList();
+                                this.setCountries();
                                 console.log(this.statusMessage);
                               },
                               (err) =>{
@@ -366,6 +372,119 @@ export class AdminstratorComponent implements OnInit {
     this.viewFleets = false;
     this.createFleet = false;
     
+  }
+
+  setCountries() {
+
+    //set the Countries first
+    this.setCountriesList();
+    //convert the list to string name and store it in an String[]
+
+    this.countries.forEach(country => {
+      this.countryList.push(country.name);
+    });
+
+    console.log(`Set ${this.countryList.length} Countries`);
+
+  }
+
+
+  setSearchOptions(event: any) {
+    console.log("trigered set options with country: " + event);
+
+    let country: string = event;
+    let city: {
+      name: string;
+      type: string;
+    } = {name: '', type: ''};
+
+    city.name = "name";
+    let cityArr = [];
+    cityArr.push(city);
+
+
+    
+
+    this.countries.forEach(country_ => {
+
+      if(country_.name == country) {
+        //set the cities
+        country_.cities.forEach(city => {
+          this.cities.push(city.name);
+        });
+
+        country_.cities.forEach(city => {
+            city.areas.forEach(area => {
+              this.areas.push(area);
+            });
+        });
+      }
+       
+         
+    });
+
+    console.log(`Set ${this.cities.length} cities, ${this.countries.length}, areals ${this.areas.length}`);
+
+  }
+
+  setCountriesList() {
+    this.countries = [
+      {name: "Zimbabwe",
+      cities: [
+        {name: "Harare",
+        areas: ["Mt Pleasent", "Eastlea", "Kuwadzana 1", "Budiriro", "Borowdale", "Greystone" , "CBD Harare", "Mbare"]
+      },
+        {name: "Mutare",
+        areas: ["Dangamvura", "Fairbridge Park", "Chikanga 1", "Chikanga 2", "Sakubva", "Destiny", "CBD Mutare", "Sakubva"]
+      },
+        {name: "Bulawayo",
+        areas: ["Selbourne Park 1", "Selbourne Park 2", "Mahatshula", "Phumala South", "Riverside", "Nust", "CBD Bulawayo", "Rankin"]
+        }
+
+      ]
+
+    },
+    {name: "South Africa",
+      cities: [
+        {name: "Joburg",
+         areas: []
+         },
+
+        {name: "Pretoria",
+         areas: []
+        },
+        {name: "Durban",
+         areas: []
+        },
+        {name: "CapeTown",
+        areas: []
+        }
+      ]
+    },
+    {name: "Botswana",
+      cities: [
+        {name: "Francis Town",
+         areas: []
+         },
+        {name: "Gaborone",
+         areas: []
+         }
+      ]
+     },
+     {name: "Mozambique",
+        cities: [
+          {name: "Maputo",
+          areas: []
+          },
+          {name: "Manica",
+            areas: []
+           },
+           {name: "Beira",
+           areas: []
+          }
+        ]
+      }
+    ]
   }
 
 

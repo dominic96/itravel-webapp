@@ -81,7 +81,7 @@ export class CreateScheduleComponent implements OnInit {
 
     //creating schedule
     this.loading = true;
-    let schedule: Schedule = {scheduleId:0, vehicleId:0, driverId: 0, routeId: 0,departureTime: '', arrivalTime: '', origin: '', destination: '', status: '', price: 0};
+    let schedule: Schedule = {scheduleId:0, vehicleId:0, driverId: 0, routeId: 0,departureTime: '', arrivalTime: '', origin: '', destination: '', status: '', price: 0,serviceProvider: ''};
     schedule.routeId = this.routeId;
     schedule.vehicleId = this.scheduleFormControls.vehicleId.value;
     schedule.driverId = this.scheduleFormControls.driverId.value;

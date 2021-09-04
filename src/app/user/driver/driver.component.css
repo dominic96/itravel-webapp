@@ -1,0 +1,44 @@
+.driverParentContainer{
+    background-image: url(../../../assets/images/background5.jpg);
+    background-repeat: no-repeat;
+    /*width: 1200px;*/
+    height: 1000px;
+}
+
+#topSide{
+    /*background-color: rgb(217, 235, 241);*/
+    background-image: url(../../../assets/images/logo1.png);
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100px;
+    background-size: contain;
+    position: static;
+}
+
+#mainCard{
+    padding-top: 0px;
+    margin-top: -7px;
+   
+}
+
+
+
+#sideBar{
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+#avatarContainer{
+    font-size: 11px;
+    font-style: italic;
+}
+
+#buttonContainter{
+    padding: -20px;
+
+}
+
+#logoutButton{
+    margin-left: -20px;
+}
+

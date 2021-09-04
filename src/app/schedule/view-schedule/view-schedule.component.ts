@@ -29,6 +29,7 @@ export class ViewScheduleComponent implements OnInit {
   country: string =  "";
   destination: string = "";
   statusMessage: string = "";
+  booked: string = "booked";
 
   constructor(private messageService: MessageService) { 
     this.buyTicket = new EventEmitter<Schedule>();

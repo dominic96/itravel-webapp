@@ -46,6 +46,29 @@
             </ng-template>
     </p-dialog>
 
+     <!-- Purchase Rural  Ticket Dailog-->
+     <p-dialog header="Purchase  Rural Ticket" 
+     [(visible)]="ruralPurchaseDialog"
+     [style] = "{width: '50vw'}"
+     [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+     position="top"
+     class="p-text-center p-text-capitalize"
+     id="ticket-purchase-dialog">
+   <div>
+       <p>Origin:              {{ticket.origin}}</p>
+       <p>Destination:         {{ticket.destination}}</p>
+       <p>Departure Time:  {{ticket.departureTime}}</p>
+       <p>Price:               ${{ticket.price}}</p>
+   </div>
+   <div id="phoneNumebrContainer">
+        <span>Phone Number</span>
+        <p-inputMask mask="+263999999999" [(ngModel)] = "phoneNumber" placeholder="+263771500400"></p-inputMask>
+   </div>
+   <ng-template pTemplate="footer">
+       <p-button icon="pi pi-check" (click)="purchaseRuralTicket()" label="Confirm" styleClass="p-button-text"></p-button>
+   </ng-template>
+</p-dialog>
+
     <!-- Boarding Pass QR Code dialog-->
     <p-dialog header="Boarding Passes" 
               [(visible)]="boardingPass"
@@ -165,7 +188,7 @@
                     </ng-template>
 
                     <app-view-schedule [schedules] = "ruralSchedules"
-                                       (buyTicket) = "confirmTicketPurchase($event)"
+                                       (buyTicket) = "confirmRuralTicketPurchase($event)"
                                        [originStation] = "cities"
                                        [destinationStation] = "cities"
                                        [countries] = "countryList"

@@ -34,14 +34,14 @@
                 <div class="p-col-9" id="infoAndButtons">
                     <div class="p-grid" id="info">
                         <div class="p-col-5" id="origin">
-                            <p class="names">{{route.originStation}}</p>
+                            <p class="names">{{route.originStation | titlecase}}</p>
 
                         </div>
                         <div class="p-col-2">
                             <p class="names">~~~</p>
                         </div>
                         <div class="p-col-5" id="destination">
-                            <p class="names">{{route.destinationStation}}</p>
+                            <p class="names">{{route.destinationStation | titlecase}}</p>
 
                         </div>
 
@@ -91,7 +91,7 @@
 
                     <div class="p-col-12 glabels" id="gname">
                         <p class="pName">
-                            {{route.originStation}} <br> ~~ <br> {{route.destinationStation}}
+                            {{route.originStation | titlecase}} <br> ~~ <br> {{route.destinationStation | titlecase}}
 
                         </p>
 

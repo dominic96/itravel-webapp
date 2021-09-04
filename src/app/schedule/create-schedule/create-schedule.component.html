@@ -1,9 +1,10 @@
-<div class="createScheduleParent">
+<div class="createScheduleParent" id="parent">
     <p-toast position="top-right"></p-toast>
     <p-card header = "Enter Schedule Details"
             [style] = "{width: '50vw', height: '50vw'}"
             styleClass = "p-card-shadow"
-            class="p-grid p-fluid p-jc-center">
+            class="p-grid p-fluid p-jc-center"
+            id="card">
         
         <!--Schedule Form Container-->
         <div class="p-col-12 p-fluid" id="formContainer">
@@ -20,7 +21,7 @@
                     <p-dropdown [options] ="drivers" 
                                 formControlName = "driverId" 
                                 placeholder = "Select Driver"
-                                optionLabel = "firstname"
+                                optionLabel = "{firstname ,lastname}"
                                 optionValue = "driverId"
                             
                                 [showClear] = "true">

@@ -148,6 +148,17 @@ export class CreateStationComponent implements OnInit {
       },
         {name: "Bulawayo",
         areas: ["Selbourne Park 1", "Selbourne Park 2", "Mahatshula", "Phumala South", "Riverside", "Nust", "CBD Bulawayo", "Rankin"]
+        },
+        {
+          name: "Nyazura",
+          areas: ["Nyazura Township"]
+        },{
+          name: "Gokwe",
+          areas: ["Gokwe Township"]
+        },
+        {
+          name: "Bhuhera",
+          areas: ["Bhuhera Township"]
         }
 
       ]

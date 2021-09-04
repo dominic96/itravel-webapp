@@ -138,7 +138,12 @@
                                         <span style="margin-left: 10px;">Local Schedule</span>
                                     </ng-template>
 
-                                    <app-view-schedule [schedules] = "localSchedules"></app-view-schedule>
+                                    <app-view-schedule [schedules] = "localSchedules"
+                                                        [originStation] = "areas"
+                                                        [destinationStation] = "areas"
+                                                        [countries] = "countryList">
+
+                                    </app-view-schedule>
                                 </p-tabPanel>
 
                                 <!--Intercity Schedule Tab-->
@@ -147,7 +152,12 @@
                                         <i class="pi pi-desktop"></i>
                                         <span style="margin-left: 10px;">Intercity Schedule</span>
                                     </ng-template>
-                                    <app-view-schedule [schedules] = "intercitySchedules"></app-view-schedule>
+                                    <app-view-schedule [schedules] = "intercitySchedules"
+                                                        [originStation] = "cities"
+                                                        [destinationStation] ="cities"
+                                                        [countries] = "countryList">
+
+                                    </app-view-schedule>
                                 </p-tabPanel>
 
                                 <!-- International Schedule Tab -->
@@ -157,7 +167,12 @@
                                         <span style="margin-left: 10px;">International Schedule</span>
                                     </ng-template>
 
-                                    <app-view-schedule [schedules] = "internationalSchedules"></app-view-schedule>
+                                    <app-view-schedule [schedules] = "internationalSchedules"
+                                                        [originStation] = "countryList"
+                                                        [destinationStation] ="countryList"
+                                                        [countries] = "countryList">
+
+                                    </app-view-schedule>
                                 </p-tabPanel>
 
                                 <!--Route Tab-->
@@ -180,7 +195,12 @@
                                         <span style="margin-left: 10px;">Rural Schedule</span>
                                     </ng-template>
 
-                                    <app-view-schedule [schedules] = "ruralSchedules"></app-view-schedule>
+                                    <app-view-schedule [schedules] = "ruralSchedules"
+                                                        [originStation] = "cities"
+                                                        [destinationStation] = "cities"
+                                                        [countries] = "countryList">
+
+                                    </app-view-schedule>
                                 </p-tabPanel>
                             </p-tabView>
 

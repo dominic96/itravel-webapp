@@ -15,12 +15,17 @@ import { Schedule } from 'src/app/schedule/schedule';
 import { ScheduleService } from 'src/app/schedule/schedule.service';
 import { Station } from 'src/app/station/station';
 import { StationService } from 'src/app/station/station.service';
-import { filter } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { City } from 'src/app/station/city';
 import { Country } from 'src/app/station/country';
+import { ScheduleWebSocketService } from 'src/app/schedule/schedule-web-socket.service';
+import { Message } from 'src/app/schedule/Message';
+import { interval, Subject } from 'rxjs';
 
 
-
+const UPDATE_INTERVAL_MS = 1000;
+const autoUpdate$ = interval(120000);
+const refresh = autoUpdate$.pipe(take(UPDATE_INTERVAL_MS));
 
 /**
  * @author Dominic Mundirewa
@@ -35,13 +40,16 @@ export class CommuterComponent implements OnInit {
 
   sideMenu = false;
   ticketDialog = false;
+  ruralPurchaseDialog: boolean= false;
   commuter: Commuter;
   routeType: string = '';
   routeType1 = "Local";
   routeType2 = "Intercity";
   routeType3 = "International";
+  phoneNumber: string = "";
  
   boardingPass: boolean = false;
+
  
   statusMessage: string = '';
   qrcode: boolean = false;
@@ -57,6 +65,10 @@ export class CommuterComponent implements OnInit {
   public cities: string[] = [];
   public countries: Country[] = [];
   public countryList: string[] = [];
+
+  
+  
+  
  
 
  
@@ -68,12 +80,25 @@ export class CommuterComponent implements OnInit {
   public  ticket: Ticket = {ticketId: 0, routeId: 0,  price: 0, token: '', origin: '', destination: '', departureTime: '', scheduleId: 0, originStation: ''};
   public tickets: Ticket[] = [{ticketId: 0, routeId: 0,  price: 0, token: '', origin: '', destination: '', departureTime: '', scheduleId: 0, originStation: ''}];
 
+  public message: Message = {message: "this is the message from Schedule"};
+  public received: any[] = [];
+  destroyed$ = new Subject();
+
+  
+
   constructor(private commuterService: CommuterService,private primeConfig: PrimeNGConfig,
               private ticketService: TicketService, private messageService: MessageService, 
               private router: Router, private scheduleService: ScheduleService,
-              private stationService: StationService) {
+              private stationService: StationService, private scheduleSocketService: ScheduleWebSocketService) {
     this.commuter = {userId:0,commuterId:0,firstname:'',lastname:'',email:''};
     this.getCommuter();
+     //initializing webSocket
+     const updateScheduleService$ = this.scheduleSocketService.connect().pipe(
+      takeUntil(this.destroyed$ ),
+    );
+
+    updateScheduleService$.subscribe(dataReceived => {this.received.push(dataReceived)
+                                                      console.log("Received message from socket web")} )
    }
 
   ngOnInit(): void {
@@ -83,12 +108,20 @@ export class CommuterComponent implements OnInit {
     this.setLocalSchedules();
     this.setIntercitySchedules();
     this.setInternationalSchedules();
-    
 
-    
-   // this.setSearchOptions();
-    this.primeConfig.ripple = true;
+    this.update();
+  }
 
+  update(): void {
+    refresh.subscribe(
+      (res) => {
+        console.log("Updating Schedule!!");
+        this.setRuralSchedules();
+        this.setLocalSchedules();
+        this.setIntercitySchedules();
+        this.setInternationalSchedules();
+      }
+    )
   }
 
   private getCommuter() {
@@ -215,6 +248,7 @@ export class CommuterComponent implements OnInit {
    
   }
 
+ 
   setCountries() {
 
     //set the Countries first
@@ -231,7 +265,7 @@ export class CommuterComponent implements OnInit {
 
   setSearchOptions(event: any) {
 
-    console.log("trigeered set options with country: " + event);
+    console.log("trigered set options with country: " + event);
 
     let country: string = event;
     let city: {
@@ -360,6 +394,35 @@ export class CommuterComponent implements OnInit {
     this.ticketDialog = true;
   }
 
+  public confirmRuralTicketPurchase(event: any) {
+    console.log("Purchasing ticket in Commuter")
+    let schedule: Schedule = event ;
+    console.log(`Schedule Id: ${schedule.scheduleId}`);
+    this.ticket.routeId  = schedule.routeId;
+    this.ticket.scheduleId = schedule.scheduleId;
+    this.ticket.originStation = schedule.origin;
+    this.ticket.origin = schedule.origin;
+    this.ticket.departureTime = schedule.departureTime;
+    this.ticket.destination = schedule.destination;
+    this.ticket.price = schedule.price;
+    this.ruralPurchaseDialog = true;
+  }
+
+  public purchaseRuralTicket() {
+
+    if (this.phoneNumber == "") {
+      this.statusMessage = "Phone Number for recipient for Rural Based Purchases";
+      this.showError();
+      return;   
+    }
+    this.ticket.phoneNumber = this.phoneNumber;
+    this.purchaseTicket();
+
+  }
+
+
+
+
   purchaseTicket() {
 
     console.log(`Purchasing ticket for Commuter with id: ${this.commuterService.commuterValue.commuterId}`)
@@ -469,6 +532,10 @@ export class CommuterComponent implements OnInit {
     ]
   }
 
+  sendMessage(): void {
+    this.scheduleSocketService.send(this.message);
+  }
+
 
 
   showSuccess() {
@@ -479,6 +546,6 @@ export class CommuterComponent implements OnInit {
     this.messageService.add({severity:'error', summary: 'Error', detail: this.statusMessage});
   }
 
-
+  
 
 }

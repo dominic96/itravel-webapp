@@ -46,12 +46,13 @@
                 </div>
 
                 <div class="p-col-6" id="listInfo">
-                    <p class="listNames">{{schedule.origin}} ~~ {{schedule.destination}}</p>
-                    <p class="listTime">{{schedule.departureTime}} ~~ {{schedule.arrivalTime}}</p>
+                    <p class="listNames">{{schedule.serviceProvider | uppercase}}</p>
+                    <p class="listNames">{{schedule.origin | uppercase}} ~~ {{schedule.destination |uppercase}}</p>
+                    <p class="listTime">{{schedule.departureTime | slice:5:10}} @{{schedule.departureTime | slice:11:16}}Hrs ~~ {{schedule.arrivalTime | slice:5:10}} @{{schedule.arrivalTime |slice:11:16}}Hrs</p>
                 </div>
-
-                <div class="p-col-3" id="buttons">
-                    <p class="price">Price: {{schedule.price}}</p>
+                <!--Show this button is schedule is not yet fully booked-->
+                <div *ngIf = "schedule.status != booked" class="p-col-3" id="buttons" >
+                    <p class="price">Price: {{schedule.price | currency:'US'}}</p>
                     <button pButton 
                             pRipple 
                             type="button" 
@@ -64,6 +65,22 @@
                     </button>
 
 
+                </div>
+
+                <!--Show this button is schedule is fully booked-->
+                <div *ngIf = "schedule.status == booked" class="p-col-3" id="buttons" >
+                    <p class="price">Price: {{schedule.price | currency:'US'}}</p>
+                    <button pButton 
+                            pRipple 
+                            type="button" 
+                            label="Booked"
+                            (click) = "onBuyTicket(schedule)"
+                            class="p-button-text p-button-rounded p-button-sm p-button-warning"
+                            styleClass="p-button-sm"
+                            iconPos="right"
+                            icon="pi pi-ticket"
+                            disabled>
+                    </button>
                 </div>
             </div>
 
@@ -78,8 +95,9 @@
 
                     </div>
                     <div class="p-col-12" id="gridInfo">
-                        <p class="gridNames">{{schedule.origin}} ~~ {{schedule.destination}}</p>
-                        <p class="gridTime">{{schedule.departureTime}} <br> {{schedule.arrivalTime}}</p>
+                        <p class="gridNames">{{schedule.serviceProvider | uppercase}}</p>
+                        <p class="gridNames">{{schedule.origin | uppercase}} ~~ {{schedule.destination | uppercase}}</p>
+                        <p class="gridTime">{{schedule.departureTime | slice:5:10}} @{{schedule.departureTime | slice:11:16}}Hrs <br> {{schedule.arrivalTime | slice:5:10}} @{{schedule.arrivalTime |slice:11:16}}Hrs</p>
                         <p class="price">Price: ${{schedule.price}}</p>
                     </div>
                     <div class="p-col-6">

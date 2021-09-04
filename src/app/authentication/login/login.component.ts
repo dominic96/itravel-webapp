@@ -8,6 +8,7 @@ import { User } from 'src/app/user/user';
 import { UserComponent } from 'src/app/user/user.component';
 import { AuthenticationService } from '../authentication.service';
 import { Credentials } from '../credentials';
+import { DriverService } from 'src/app/user/driver/driver.service';
 
 /**
  * @author Dominic Mundirewa
@@ -27,12 +28,13 @@ export class LoginComponent implements OnInit {
   user!: User;
   loading: boolean = false;
   errorMessage: string = '';
+  statusMessage: string = '';
   
   submitted = false;
   returnUrl: string;
 
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService,
-             private router: Router, private messageService: MessageService) { 
+             private router: Router, private messageService: MessageService, private driverService: DriverService) { 
     this.returnUrl = '';
     this.loginForm = this.fb.group({
       email: ['',Validators.required],
@@ -93,6 +95,7 @@ export class LoginComponent implements OnInit {
                 this.user = this.authenticationService.userValue;
                 console.log("Navigating user to their Home according to User Type");
                 this.router.navigate(['/commuter/commuter']);
+                this.statusMessage = `Commuter logged in Successfully`;
                 this.showSuccess();
 
               }
@@ -100,6 +103,7 @@ export class LoginComponent implements OnInit {
                 //navigate to Adminstrator
                 console.log("Navigating users to their Home according to the User Type");
                 this.router.navigate(['/adminstrator/adminstrator'])
+                this.statusMessage = ` Adminstrator Logged in successfully`;
                 this.showSuccess();
 
               }else if(this.authenticationService.userValue.type == "Commuter") {
@@ -108,7 +112,25 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/commuter/commuter']);
                 this.showSuccess();
 
-              }else{
+              }else if(this.authenticationService.userValue.type == "driver") {
+                //get Driver Account then navigate to driver home
+                this.driverService.getDriverAccount()
+                                    .subscribe(
+                                      (driver) => {
+                                        this.statusMessage = `Driver , ${driver.firstname, driver.lastname} Logged in Successfully`;
+                                        this.showSuccess();
+                                        
+                                        this.router.navigate(['driver']);
+                                        
+                                      },
+                                      (err) => {
+                                        this.errorMessage = "Failed to Log in driver, retry with valid credentials";
+                                        
+                                      }
+                                    )
+
+              }
+              else{
                 this.errorMessage = "Failed to Login, wrong email and/or password";
                 this.showError();
                 this.router.navigate(['/login/login']);
@@ -130,7 +152,7 @@ export class LoginComponent implements OnInit {
   }
 
   showSuccess() {
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Logged in successfully'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: this.statusMessage});
   }
 
   showError() {
